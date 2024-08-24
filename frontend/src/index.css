@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  
+  .cstminvisible {
+    visibility: hidden;
+    transform: translateY(-30px);
+    transition: all 300ms ease-out, visibility 0ms 200ms;
+  }
+
+  .cstmvisible {
+    visibility: visible;
+    transform: translateY(1-0px);
+    transition: all 300ms ease-out;
+  }
+
+  .cvisible {
+    visibility: visible;
+    transform: translateY(-30px);
+    transition: all 300ms ease-out;
+  }
+
+  .sitevisible {
+    visibility: visible;
+    bottom: 180px;
+    transition: all 400ms ease-in-out;
+  }
+
+  .sitehidden {
+    visibility: hidden;
+    bottom: 115px;
+    transition: all 400ms ease-out, visibility 0ms 250ms;
+  }
+
+
+
+}
+
+body {
+  scroll-behavior: smooth;
+  background-color: black;
+  color: white;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  transition: all 200ms eas-in-out;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+/* for body */
+.scrollbar-rounded {
+  @apply overflow-y-auto;
+}
+
+.scrollbar-rounded::-webkit-scrollbar {
+  width: 4px;
+  height: 50px;
+}
+
+.scrollbar-rounded::-webkit-scrollbar-thumb {
+  @apply bg-white rounded-full;
+}
