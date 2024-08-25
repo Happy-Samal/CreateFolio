@@ -1,14 +1,13 @@
 import express from 'express';
-import dotenv from 'dotenv';
+// import dotenv from 'dotenv';
 import cors from 'cors';
-import 'dotenv/config'
 import bodyParser from 'body-parser';
 import session from 'express-session';
 import passport from './passportConfig.js';
 import User from './models/User.js';
 import Portfolio from './models/Portfolio.js'
 
-dotenv.config();
+// dotenv.config();
 
 const app = express();
 const port = process.env.PORT || 3000;
