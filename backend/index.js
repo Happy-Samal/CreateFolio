@@ -28,8 +28,11 @@ app.use(cors({
 // Setup session
 app.use(session({
     secret: process.env.SESSION_SECRET, 
-    resave: false,
-    saveUninitialized: false,
+    resave: true,
+    saveUninitialized: true,
+    cookie:{
+        maxAge:24 * 60 * 60 * 1000
+    }
 }));
 
 // Setup passport
