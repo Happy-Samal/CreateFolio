@@ -13,6 +13,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json({ limit: '10mb' }));
+app.set('trust proxy', 1); // Trust first proxy
 
 // Connect to the database
 import connectDB from './db/dbconn.js';
@@ -30,12 +31,6 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'createfolio',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        maxAge: 24 * 60 * 60 * 1000, // 1 day
-        secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
-        sameSite: 'none', // Allow cookies to be sent with cross-origin requests
-        httpOnly: true // Prevents client-side JavaScript from accessing the cookies
-    }
 }));
 
 
