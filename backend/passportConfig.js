@@ -42,7 +42,6 @@ passport.use(new GitHubStrategy({
     callbackURL: `${process.env.URL}/auth/github/callback`,
     scope: ['user:email']
 }, async (accessToken, refreshToken, profile, done) => {
-    console.log(profile)
     try {
         const existingUser = await User.findOne({ username: profile.emails[0].value.split("@")[0] });
         if (existingUser) {
@@ -73,7 +72,6 @@ passport.use(new FacebookStrategy({
     callbackURL: `${process.env.URL}/auth/facebook/callback`,
     profileFields: ['id', 'emails', 'name', 'photos']
 }, async (accessToken, refreshToken, profile, done) => {
-    console.log(profile)
     try {
         const existingUser = await User.findOne({ username: profile.emails[0].value.split("@")[0] });
         if (existingUser) {

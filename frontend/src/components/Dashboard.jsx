@@ -20,7 +20,9 @@ function Dashboard() {
     getUserData()
   }, [])
 
+  console.log(userInfo)
   if (Object.keys(userInfo).length <= 0) {
+    console.log("navigate to login",userInfo)
     navigate('/login')
   }
 
