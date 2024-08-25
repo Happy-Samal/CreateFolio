@@ -67,6 +67,7 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 
 // Test route to see the user information
 app.get('/isLogin', async(req, res) => {
+    console.log("is Login : ",req.isAuthenticated())
     if (req.isAuthenticated()) {
         res.json(req.user);
     } else {
