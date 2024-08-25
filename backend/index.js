@@ -13,7 +13,6 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json({ limit: '10mb' }));
-app.set('trust proxy', 1); // Trust first proxy
 
 // Connect to the database
 import connectDB from './db/dbconn.js';
@@ -71,10 +70,6 @@ app.get('/auth/facebook/callback', passport.authenticate('facebook', {
 
 // Test route to see the user information
 app.get('/isLogin', async(req, res) => {
-    console.log('Session:', req.session);
-    console.log('User:', req.user);
-    console.log('Is Authenticated:', req.isAuthenticated());
-    console.log('Cookies:', req.headers.cookie);
     if (req.isAuthenticated()) {
         res.json(req.user);
     } else {

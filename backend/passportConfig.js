@@ -3,7 +3,6 @@ import { Strategy as GoogleStrategy } from 'passport-google-oauth20';
 import { Strategy as GitHubStrategy } from 'passport-github2';
 import { Strategy as FacebookStrategy } from 'passport-facebook';
 import User from './models/User.js'; // Adjust the path according to your project structure
-import Portfolio from './models/Portfolio.js';
 
 // google
 passport.use(new GoogleStrategy({
@@ -25,10 +24,6 @@ passport.use(new GoogleStrategy({
             displayname:profile.displayName,
         });
         await newUser.save();
-        const userPortfolio = new Portfolio({
-            username: profile.emails[0].value.split("@")[0],
-        });
-        await userPortfolio.save();
         return done(null, newUser);
     } catch (error) {
         return done(error, null);
@@ -55,10 +50,6 @@ passport.use(new GitHubStrategy({
             displayname:profile.displayName,
         });
         await newUser.save();
-        const userPortfolio = new Portfolio({
-            username: profile.emails[0].value.split("@")[0],
-        });
-        await userPortfolio.save();
         return done(null, newUser);
     } catch (error) {
         return done(error, null);
@@ -85,10 +76,6 @@ passport.use(new FacebookStrategy({
             displayname:profile.displayName,
         });
         await newUser.save();
-        const userPortfolio = new Portfolio({
-            username: profile.emails[0].value.split("@")[0],
-        });
-        await userPortfolio.save();
         return done(null, newUser);
     } catch (error) {
         return done(error, null);
