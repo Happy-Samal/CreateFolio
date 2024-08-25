@@ -42,7 +42,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 
 app.get('/auth/google/callback', passport.authenticate('google', { 
     successRedirect: `${process.env.FRONTEND_URL}/dashboard`,
-    failureRedirect: `${process.env.FRONTEND_URL}/error`,
+    failureRedirect: `${process.env.FRONTEND_URL}/login`,
 }));
 
 // github Auth Routes
