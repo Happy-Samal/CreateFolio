@@ -27,9 +27,9 @@ app.use(cors({
 
 // Setup session
 app.use(session({
-    secret: process.env.SESSION_SECRET, 
-    resave: true,
-    saveUninitialized: true,
+    secret: `${process.env.SESSION_SECRET} || 'createfolio'`, 
+    resave: false,
+    saveUninitialized: false,
     cookie:{
         maxAge:24 * 60 * 60 * 1000
     }
