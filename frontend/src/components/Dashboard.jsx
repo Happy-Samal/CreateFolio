@@ -9,7 +9,7 @@ function Dashboard() {
   useEffect(() => {
     const getUserData = async () => {
       try {
-        let response = await fetch('http://localhost:3000/isLogin', { method: 'GET', credentials: 'include', })
+        let response = await fetch(`${import.meta.env.VITE_API_URL}/isLogin`, { method: 'GET', credentials: 'include', })
         let data = await response.json()
         setUserInfo(data)
       } catch (err) {
@@ -46,7 +46,7 @@ function Dashboard() {
           <div className='flex flex-col gap-5'>
             <span><span className='font-[500]'>Email</span> : {userInfo.email}</span>
             <span><span className='font-[500]'>User Name</span> : {userInfo.username}</span>
-            <span className='font-[500]'>Portfolio Link : <NavLink to={`/user/${userInfo.username}`}><span className='underline text-blue-400 cursor-pointer'>http://localhost:5173/{userInfo.username}</span></NavLink></span>
+            <span className='font-[500]'>Portfolio Link : <NavLink to={`/user/${userInfo.username}`}><span className='underline text-blue-400 cursor-pointer'>`${import.meta.env.VITE_API_URL}/${userInfo.username}`</span></NavLink></span>
           </div>
         </div>
       </div>
