@@ -20,7 +20,6 @@ function Dashboard() {
     getUserData()
   }, [])
 
-  console.log(userInfo)
   if (Object.keys(userInfo).length <= 0) {
     console.log("navigate to login",userInfo)
     navigate('/login')
@@ -48,7 +47,7 @@ function Dashboard() {
           <div className='flex flex-col gap-5'>
             <span><span className='font-[500]'>Email</span> : {userInfo.email}</span>
             <span><span className='font-[500]'>User Name</span> : {userInfo.username}</span>
-            <span className='font-[500]'>Portfolio Link : <NavLink to={`/user/${userInfo.username}`}><span className='underline text-blue-400 cursor-pointer'>`${import.meta.env.VITE_API_URL}/${userInfo.username}`</span></NavLink></span>
+            <span className='font-[500]'>Portfolio Link : <NavLink to={`/user/${userInfo.username}`}><span className='underline text-blue-400 cursor-pointer'>`https://create-folio.vercel.app/user/{userInfo.username}`</span></NavLink></span>
           </div>
         </div>
       </div>
