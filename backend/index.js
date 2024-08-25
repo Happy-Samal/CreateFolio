@@ -42,7 +42,7 @@ app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'em
 
 app.get('/auth/google/callback', passport.authenticate('google', { 
     successRedirect: `${process.env.FRONTEND_URL}/dashboard`,
-    failureRedirect: `${process.env.FRONTEND_URL}/login`,
+    failureRedirect: `${process.env.FRONTEND_URL}/error`,
 }));
 
 // github Auth Routes
@@ -115,6 +115,11 @@ app.post('/updatePortfolio',async(req,res)=>{
         console.log('error in update portfoli',err)
     }
 })
+
+app.get('/',(req,res)=>{
+    res.json({backend:'Done'})
+})
+
 app.listen(port, () => {
     console.log(`App listening on http://localhost:${port}`);
 });
