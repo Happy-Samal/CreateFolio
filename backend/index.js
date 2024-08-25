@@ -13,6 +13,7 @@ const app = express();
 const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json({ limit: '10mb' }));
+app.set('trust proxy', 1); // Trust first proxy
 
 // Connect to the database
 import connectDB from './db/dbconn.js';
