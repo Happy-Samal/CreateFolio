@@ -404,6 +404,7 @@ function User() {
       message: sendemailForm.sendermessage,
     };
 
+    console.log(templateParams)
     try {
       const response = await emailjs.send(import.meta.env.VITE_SERVICE_KEY, import.meta.env.VITE_TEMPLATE_KEY, templateParams);
       console.log('SUCCESS!', response.status, response.text);
