@@ -29,7 +29,7 @@ app.use(cors({
 app.use(session({
     secret: process.env.SESSION_SECRET, 
     resave: false,
-    saveUninitialized: true,
+    saveUninitialized: false,
     cookie: {
         secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
         httpOnly: true,
