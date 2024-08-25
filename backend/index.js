@@ -70,6 +70,7 @@ app.get('/isLogin', async(req, res) => {
     console.log('Session:', req.session);
     console.log('User:', req.user);
     console.log('Is Authenticated:', req.isAuthenticated());
+    console.log('Cookies:', req.headers.cookie);
     if (req.isAuthenticated()) {
         res.json(req.user);
     } else {
