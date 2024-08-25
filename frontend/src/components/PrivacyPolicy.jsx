@@ -4,7 +4,7 @@ import { Helmet } from 'react-helmet-async';
 function PrivacyPolicy() {
   return (
     <>
-    <Helmet>
+      <Helmet>
         <title>CreateFolio - privacy and policy</title>
         <meta name="description" content="CreateFolio - provide a platform where you make your portfolio in second" />
       </Helmet>
@@ -16,30 +16,30 @@ function PrivacyPolicy() {
               <strong>Effective Date:</strong>{new Date().getFullYear()}
             </p>
             <p className="text-gray-200 mb-6">
-              At Need Money , we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, and safeguard your information.
+              At CreateFolio, we are committed to protecting your privacy. This Privacy Policy outlines how we collect, use, and safeguard your personal information to ensure your data is handled with the utmost care.
             </p>
             <h2 className="text-xl font-bold mb-4">Information We Collect:</h2>
             <ul className="list-disc pl-6 mb-6">
-              <li className="text-gray-200">Personal Information: Name, email address, phone number, etc.</li>
-              <li className="text-gray-200">Payment Information: Processed securely through Razorpay.</li>
-              <li className="text-gray-200">Usage Data: Information on how you use our site.</li>
+              <li className="text-gray-200">Personal Information: Name, email address, phone number, and other contact details.</li>
+              <li className="text-gray-200">Portfolio Data: Information about your projects, skills, and achievements.</li>
+              <li className="text-gray-200">Usage Data: Insights into how you interact with our platform and its features.</li>
             </ul>
             <h2 className="text-xl font-bold mb-4">How We Use Your Information:</h2>
             <ul className="list-disc pl-6 mb-6">
-              <li className="text-gray-200">To provide and maintain our service.</li>
-              <li className="text-gray-200">To notify you about changes to our service.</li>
-              <li className="text-gray-200">To provide customer support.</li>
+              <li className="text-gray-200">To provide and enhance your portfolio experience.</li>
+              <li className="text-gray-200">To keep you informed about updates and new features.</li>
+              <li className="text-gray-200">To offer support and address any inquiries or issues.</li>
               <li className="text-gray-200">
-                To gather analysis or valuable information so that we can improve our service.
+                To analyze usage and gather insights to continually improve our platform.
               </li>
             </ul>
             <p className="text-gray-200 mb-6">
-              <strong>Data Security:</strong> We use industry-standard encryption to protect your personal data and payment information.
+              <strong>Data Security:</strong> We employ industry-standard encryption methods to safeguard your personal and portfolio information.
             </p>
             <p className="text-gray-200 mb-6">
               <strong>Your Rights:</strong> You have the right to access, update, and delete your personal information. To exercise these rights, please contact us at{" "}
-              <a href="mailto:support@needmoney.com" className="text-blue-500 hover:underline">
-                support@needmoney.com
+              <a href="mailto:support@createfolio.com" className="text-blue-500 hover:underline">
+                support@createfolio.com
               </a>
               .
             </p>
@@ -50,7 +50,8 @@ function PrivacyPolicy() {
               </a>
               .
             </p>
-            
+
+
           </div>
         </div>
       </div>

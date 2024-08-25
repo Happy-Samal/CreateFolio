@@ -27,7 +27,7 @@ function ContactUs() {
                 reach out to us:
               </p>
               <p className="p-4 text-gray-200 text-md text-center font-sans flex flex-col">
-                <span>Email: support@needmoney.com</span>
+                <span>Email: support@createfolio.com</span>
                 <span>Phone: +1-800-123-4567</span>
                 <span>Address: 003 Creator Lane, Innovation City, CA 3377</span>
               </p>
