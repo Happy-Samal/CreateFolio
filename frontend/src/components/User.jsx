@@ -453,7 +453,7 @@ function User() {
           </div>
         </div>
 
-        <div className='bg-white cmd:min-h-[490vh] min-h-[950vh]'>
+        <div className='bg-white cmd:min-h-[490vh] min-h-[810vh]'>
 
           {/* navbar */}
           <div className={`cmd:h-20 cmd:px-32 px-4 flex border-b-2 bg-white shadow-[2px_4px_4px_rgba(0,0,0,0.2)] cmd:items-center justify-between sticky top-0 z-50 py-2 cmd:py-0 overflow-hidden cmd:overflow-visible transition-all duration-500 ease-in-out  ${expanded ? 'h-64' : 'h-14'}`} >
