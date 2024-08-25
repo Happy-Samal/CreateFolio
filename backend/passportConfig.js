@@ -13,7 +13,7 @@ passport.use(new GoogleStrategy({
     scope: ['profile', 'email']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const existingUser = await User.findOne({ username: profile.emails[0].value.split("@")[0] });
+        const existingUser = await User.findOne({ googleId:profile.id});
         if (existingUser) {
             return done(null, existingUser);
         }
@@ -43,7 +43,7 @@ passport.use(new GitHubStrategy({
     scope: ['user:email']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const existingUser = await User.findOne({ username: profile.emails[0].value.split("@")[0] });
+        const existingUser = await User.findOne({ githubId: profile.id});
         if (existingUser) {
             return done(null, existingUser);
         }
@@ -73,7 +73,7 @@ passport.use(new FacebookStrategy({
     profileFields: ['id', 'emails', 'name', 'photos']
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        const existingUser = await User.findOne({ username: profile.emails[0].value.split("@")[0] });
+        const existingUser = await User.findOne({ facebookId: profile.id});
         if (existingUser) {
             return done(null, existingUser);
         }
