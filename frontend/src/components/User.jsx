@@ -12,6 +12,8 @@ function User() {
   const navigate = useNavigate()
   const [isLogin, setIsLogin] = useState(false)
   const [isLoading, setIsLoading] = useState(false);
+  const [updateTrigger, setUpdateTrigger] = useState(false); // New state for triggering updates
+
 
   useEffect(() => {
     const isuserLogin = async () => {
@@ -53,14 +55,12 @@ function User() {
       }
     }
     getUserPortfolio()
-  }, [])
+  }, [updateTrigger])
 
   const [istop, setIstop] = useState(false)
   const dpRef = useRef()
   const siteRef = useRef()
   const [hoveredId, setHoveredId] = useState(null);
-  // site Hover is for demo
-  const [siteHover, setSiteHover] = useState(false)
   const [expanded, setExapnded] = useState(false)
   const homeRef = useRef()
   const aboutRef = useRef()
@@ -134,6 +134,7 @@ function User() {
         theme: "light",
         transition: Bounce,
       });
+      setUpdateTrigger(!updateTrigger); // Toggle updateTrigger state to re-fetch portfolio data
     } catch (err) {
       console.log('Error in fetch user data', err);
       toast.error('Error updating user info. Please try again.');
