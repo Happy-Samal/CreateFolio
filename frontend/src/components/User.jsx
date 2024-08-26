@@ -126,17 +126,19 @@ function User() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      toast(result.message, {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      setTimeout(() => {
+        toast(result.message, {
+          position: "top-right",
+          autoClose: 1000,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "light",
+          transition: Bounce,
+        });
+      }, 0);
       setUpdateTrigger(true);
     } catch (err) {
       console.log('Error in fetch user data', err);
