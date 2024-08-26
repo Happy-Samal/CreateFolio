@@ -36,6 +36,7 @@ function User() {
   useEffect(() => {
     const getUserPortfolio = async () => {
       try {
+        setIsLoading(true); // Set loading state to true
         let data = { username: username }
         let response = await fetch(`${import.meta.env.VITE_API_URL}/userPortfolio`, {
           method: 'POST',
@@ -50,6 +51,8 @@ function User() {
       } catch (err) {
         console.log('Error in fetch user data', err)
         navigate('/error')
+      }finally {
+        setIsLoading(false); // Set loading state to false
       }
     }
     if(username !== 'demo'){
@@ -111,7 +114,6 @@ function User() {
   const update = async (updates) => {
     console.log(updates)
     try {
-      setIsLoading(true); // Set loading state to true
       let data = {
         username: username,
         updates:updates
@@ -140,8 +142,6 @@ function User() {
       console.log('Error in fetch user data', err);
       toast.error('Error updating user info. Please try again.');
       navigate('/error');
-    }finally {
-      setIsLoading(false); // Set loading state to false
     }
   }
 
