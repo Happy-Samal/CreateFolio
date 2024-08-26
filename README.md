@@ -13,8 +13,9 @@ click - https://create-folio.vercel.app/
 - **Frontend & Backend**: React js , ExpressJs(Nodejs)
 - **Styling**: Tailwind CSS
 - **Database**: MongoDB
-- **Authentication**: passport js
-- **Email**: email js
+- **Authentication**: passport js , Express-session
+- **Email**: Email js
+- **Map**: Leaflet
 - **Hosting**: Vercel
 
 ## Getting Started
