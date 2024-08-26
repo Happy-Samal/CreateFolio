@@ -6,6 +6,7 @@ import session from 'express-session';
 import passport from './passportConfig.js';
 import User from './models/User.js';
 import Portfolio from './models/Portfolio.js'
+import MongoStore from 'connect-mongo'; // Import connect-mongo
 
 dotenv.config();
 
@@ -26,16 +27,24 @@ app.use(cors({
     credentials: true,
 }));
 
+// Setup session with MongoStore
+const mongoStore = MongoStore.create({
+    mongoUrl: process.env.MONGO_URI,
+    collectionName: 'sessions', // Collection name for storing sessions
+    ttl: 24 * 60 * 60 * 1000, // Time to live for sessions (in seconds)
+});
+
 // Setup session
 app.use(session({
     secret: process.env.SESSION_SECRET || 'createfolio',
     resave: false,
     saveUninitialized: false,
+    store: mongoStore, // Use MongoStore to save sessions
     cookie: {
-        maxAge:24*60*60*1000,
-        secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
-        sameSite: 'none', // Allow cookies to be sent with cross-origin requests
-        httpOnly: true // Prevents client-side JavaScript from accessing the cookies
+        maxAge: 24 * 60 * 60 * 1000,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'none',
+        httpOnly: true
     }
 }));
 
