@@ -114,9 +114,10 @@ app.post('/userPortfolio',async(req,res)=>{
 // update portfolio
 app.post('/updatePortfolio', async (req, res) => {
     try {
+        const { username, updates } = req.body; // Extracting updates from the request body
         const updatedPortfolio = await Portfolio.findOneAndUpdate(
-            { username: req.body.username }, // Find the document by username
-            { $set: req.body }, // Merge new data with existing data
+            { username: username }, // Find the document by username
+            { $set: updates }, // Merge new data with existing data
             { new: true, runValidators: true, upsert: true } // Options: return updated document, run schema validators, create if not found
         );
         // Send the updated portfolio as a response

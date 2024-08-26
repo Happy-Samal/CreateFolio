@@ -108,13 +108,13 @@ function User() {
   }, [])
 
 
-  const update = async (value) => {
-    console.log(value)
+  const update = async (updates) => {
+    console.log(updates)
     try {
       setIsLoading(true); // Set loading state to true
       let data = {
         username: username,
-        userInfo: value
+        updates:updates
       };
       const response = await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
         method: 'POST',
@@ -154,7 +154,7 @@ function User() {
   }
   const userInfoSave = () => {
     userInfoInput.current.style.display = 'none'
-    update(userInfoForm)
+    update({userInfo:userInfoForm})
   }
 
   // whoiam input
@@ -166,7 +166,7 @@ function User() {
   }
   const whoiamSave =() => {
     whoiamInput.current.style.display = 'none'
-    update(whoiamForm)
+    update({whoiam:whoiamForm})
   }
   // personalInfo input
   const personalInput = useRef()
@@ -177,7 +177,7 @@ function User() {
   }
   const personalSave = async () => {
     personalInput.current.style.display = 'none'
-    update(personalForm)
+    update({personalInfo:personalForm})
   }
 
   // expertise input
@@ -196,7 +196,7 @@ function User() {
     expertiseInput.current.style.display = 'none'
     setexpertiseArr([])
     setexpertiseForm({ main: '', sub: '' });
-    update([...expertiseArr, expertiseForm])
+    update({expertise:[...expertiseArr, expertiseForm]})
   }
   // skill input
   const skillInput = useRef()
@@ -214,7 +214,7 @@ function User() {
     skillInput.current.style.display = 'none'
     setskillArr([])
     setskillForm({ slang: '', spercentage: '' });
-    update([...skillArr, skillForm])
+    update({skill:[...skillArr, skillForm]})
   }
 
   // Language input
@@ -233,7 +233,7 @@ function User() {
     languageInput.current.style.display = 'none'
     setlanguageArr([])
     setlanguageForm({ llang: '', lpercentage: '' });
-    update([...languageArr, languageForm])
+    update({language:[...languageArr, languageForm]})
   }
 
   // images
@@ -260,7 +260,7 @@ function User() {
   }
   const imageSave = async () => {
     imageInput.current.style.display = 'none'
-    update(imageForm)
+    update({images:imageForm})
   }
 
   // project input
@@ -304,7 +304,7 @@ function User() {
     projectInput.current.style.display = 'none'
     setlanguageArr([])
     setProjectForm({ pname: '', puse: '', plink: '', pimage: '' })
-    update([...projectArr, projectForm])
+    update({project:[...projectArr, projectForm]})
   }
 
   // email send
