@@ -138,7 +138,7 @@ function User() {
           theme: "light",
           transition: Bounce,
         });
-      }, 0);
+      }, 2000);
       setUpdateTrigger(true);
     } catch (err) {
       console.log('Error in fetch user data', err);
