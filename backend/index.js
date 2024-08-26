@@ -32,6 +32,7 @@ app.use(session({
     resave: false,
     saveUninitialized: false,
     cookie: {
+        maxAge:24*60*60*1000,
         secure: process.env.NODE_ENV === 'production', // Ensure cookies are only sent over HTTPS in production
         sameSite: 'none', // Allow cookies to be sent with cross-origin requests
         httpOnly: true // Prevents client-side JavaScript from accessing the cookies

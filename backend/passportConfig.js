@@ -84,11 +84,17 @@ passport.use(new FacebookStrategy({
 
 
 passport.serializeUser((user, done) => {
-    done(null, user);
+    done(null, user.id); // Use the user id to serialize
 });
 
-passport.deserializeUser((user, done) => {
-     done(null, user);
+passport.deserializeUser(async (id, done) => {
+    try {
+        const user = await User.findById(id); // Find user by id
+        done(null, user); // Attach user to req.user
+    } catch (err) {
+        done(err);
+    }
 });
+
 
 export default passport;
