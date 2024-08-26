@@ -42,14 +42,14 @@ function Dashboard() {
           </div>
           <div className='flex flex-col text-center items-center'>
           <div className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-full overflow-hidden bg-black border-white border-2">
-            <img src={userInfo.avatar ? userInfo.avatar : '/avatar1.gif'} alt="profile" className="w-24 h-24 sm:w-32 sm:h-32 rounded-full" />
+            <img src={userData.avatar ? userData.avatar : '/avatar1.gif'} alt="profile" className="w-24 h-24 sm:w-32 sm:h-32 rounded-full" />
           </div>
-          <span>{userInfo.displayname}</span>
+          <span>{userData.displayname}</span>
           </div>
           <div className='flex flex-col gap-5'>
-            <span><span className='font-[500]'>Email</span> : {userInfo.email}</span>
-            <span><span className='font-[500]'>User Name</span> : {userInfo.username}</span>
-            <span className='font-[500]'>Portfolio Link : <NavLink to={`/user/${userInfo.username}`}><span className='underline text-blue-400 cursor-pointer'>https://create-folio.vercel.app/user/{userInfo.username}</span></NavLink></span>
+            <span><span className='font-[500]'>Email</span> : {userData.email}</span>
+            <span><span className='font-[500]'>User Name</span> : {userData.username}</span>
+            <span className='font-[500]'>Portfolio Link : <NavLink to={`/user/${userData.username}`}><span className='underline text-blue-400 cursor-pointer'>https://create-folio.vercel.app/user/{userData.username}</span></NavLink></span>
           </div>
         </div>
       </div>
