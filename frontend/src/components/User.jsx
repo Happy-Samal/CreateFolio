@@ -54,7 +54,9 @@ function User() {
         setIsLoading(false); // Set loading state to false
       }
     }
-    getUserPortfolio()
+    if(username !== 'demo'){
+      getUserPortfolio()
+    }
   }, [updateTrigger])
 
   const [istop, setIstop] = useState(false)
