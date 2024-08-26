@@ -19,7 +19,7 @@ function Login() {
         <meta name="description" content="CreateFolio - provide a platform where you make your portfolio in second" />
       </Helmet>
       <Home />
-      <div className="fixed inset-0 flex  justify-center bg-black bg-opacity-20 backdrop-blur-[3px] z-50 text-white">
+      <div className="fixed inset-0 flex  justify-center bg-black bg-opacity-20 backdrop-blur-[3px] z-40 text-white">
             <div className=" relative sm:top-28 top-24 text-center border-2 rounded-xl h-[80vh] py-12 sm:px-8">
 
                 <div className='absolute top-3 right-3 cursor-pointer'>

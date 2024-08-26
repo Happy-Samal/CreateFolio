@@ -122,11 +122,6 @@ function User() {
         },
         body: JSON.stringify(data),
       });
-      if (response.ok) {
-        toast.success('User info updated successfully!');
-      } else {
-        throw new Error('Failed to update user info');
-      }
       const result = await response.json();
       toast(result.message, {
         position: "top-right",
@@ -139,9 +134,6 @@ function User() {
         theme: "light",
         transition: Bounce,
       });
-      setTimeout(() => {
-        window.location.reload();
-      }, 2000);
     } catch (err) {
       console.log('Error in fetch user data', err);
       toast.error('Error updating user info. Please try again.');
