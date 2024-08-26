@@ -3,30 +3,38 @@ import { useNavigate, useParams } from 'react-router-dom'
 import Map from './Map';
 import { Helmet } from 'react-helmet-async';
 import emailjs from '@emailjs/browser';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { Bounce } from "react-toastify";
 
 function User() {
   const { username } = useParams();
   const navigate = useNavigate()
+  const [isLogin, setIsLogin] = useState(false)
+  const [isLoading, setIsLoading] = useState(false);
 
-  const [userLogin, setUserLogin] = useState({})
   useEffect(() => {
-    const isLogin = async () => {
+    const isuserLogin = async () => {
       try {
         let response = await fetch(`${import.meta.env.VITE_API_URL}/isLogin`, { method: 'GET', credentials: 'include', })
         let data = await response.json()
-        setUserLogin(data)
+        if (data.username === username) {
+          setIsLogin(true)
+        }
       } catch (err) {
         console.log('Error in fetch user data', err)
         navigate('/error')
       }
     }
-    isLogin()
+    isuserLogin()
   }, [])
+
 
   const [userPortfolio, setUserPortfolio] = useState({})
   useEffect(() => {
     const getUserPortfolio = async () => {
       try {
+        setIsLoading(true); // Set loading state to true
         let data = { username: username }
         let response = await fetch(`${import.meta.env.VITE_API_URL}/userPortfolio`, {
           method: 'POST',
@@ -40,6 +48,8 @@ function User() {
       } catch (err) {
         console.log('Error in fetch user data', err)
         navigate('/error')
+      }finally {
+        setIsLoading(false); // Set loading state to false
       }
     }
     getUserPortfolio()
@@ -98,6 +108,48 @@ function User() {
   }, [])
 
 
+  const update = async (value) => {
+    try {
+      setIsLoading(true); // Set loading state to true
+      let data = {
+        username: username,
+        userInfo: value
+      };
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+      if (response.ok) {
+        toast.success('User info updated successfully!');
+      } else {
+        throw new Error('Failed to update user info');
+      }
+      const result = await response.json();
+      toast(result.message, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (err) {
+      console.log('Error in fetch user data', err);
+      toast.error('Error updating user info. Please try again.');
+      navigate('/error');
+    }finally {
+      setIsLoading(false); // Set loading state to false
+    }
+  }
 
   // userInfo input
   const userInfoInput = useRef()
@@ -106,24 +158,9 @@ function User() {
   const userInfoChange = (e) => {
     setuserInfoForm({ ...userInfoForm, [e.target.name]: e.target.value })
   }
-  const userInfoSave = async () => {
+  const userInfoSave = () => {
     userInfoInput.current.style.display = 'none'
-    try {
-      let data = {
-        username: username,
-        userInfo: userInfoForm
-      }
-      await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.log('Error in fetch user data', err)
-      navigate('/error')
-    }
+    update(userInfoForm)
   }
 
   // whoiam input
@@ -133,24 +170,9 @@ function User() {
   const whoiamChange = (e) => {
     setwhoiamForm({ ...whoiamForm, [e.target.name]: e.target.value })
   }
-  const whoiamSave = async () => {
+  const whoiamSave =() => {
     whoiamInput.current.style.display = 'none'
-    try {
-      let data = {
-        username: username,
-        whoiam: whoiamForm
-      }
-      await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.log('Error in fetch user data', err)
-      navigate('/error')
-    }
+    update(whoiamForm)
   }
   // personalInfo input
   const personalInput = useRef()
@@ -161,22 +183,7 @@ function User() {
   }
   const personalSave = async () => {
     personalInput.current.style.display = 'none'
-    try {
-      let data = {
-        username: username,
-        personalInfo: personalForm
-      }
-      await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.log('Error in fetch user data', err)
-      navigate('/error')
-    }
+    update(personalForm)
   }
 
   // expertise input
@@ -195,23 +202,7 @@ function User() {
     expertiseInput.current.style.display = 'none'
     setexpertiseArr([])
     setexpertiseForm({ main: '', sub: '' });
-    try {
-      let data = {
-        username: username,
-        expertise: [...expertiseArr, expertiseForm]
-      }
-      await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.log('Error in fetch user data', err)
-      navigate('/error')
-    }
-
+    update([...expertiseArr, expertiseForm])
   }
   // skill input
   const skillInput = useRef()
@@ -229,22 +220,7 @@ function User() {
     skillInput.current.style.display = 'none'
     setskillArr([])
     setskillForm({ slang: '', spercentage: '' });
-    try {
-      let data = {
-        username: username,
-        skill: [...skillArr, skillForm]
-      }
-      await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.log('Error in fetch user data', err)
-      navigate('/error')
-    }
+    update([...skillArr, skillForm])
   }
 
   // Language input
@@ -263,22 +239,7 @@ function User() {
     languageInput.current.style.display = 'none'
     setlanguageArr([])
     setlanguageForm({ llang: '', lpercentage: '' });
-    try {
-      let data = {
-        username: username,
-        language: [...languageArr, languageForm]
-      }
-      await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.log('Error in fetch user data', err)
-      navigate('/error')
-    }
+    update([...languageArr, languageForm])
   }
 
   // images
@@ -305,22 +266,7 @@ function User() {
   }
   const imageSave = async () => {
     imageInput.current.style.display = 'none'
-    try {
-      let data = {
-        username: username,
-        images: imageForm
-      }
-      await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.log('Error in fetch user data', err)
-      navigate('/error')
-    }
+    update(imageForm)
   }
 
   // project input
@@ -364,22 +310,7 @@ function User() {
     projectInput.current.style.display = 'none'
     setlanguageArr([])
     setProjectForm({ pname: '', puse: '', plink: '', pimage: '' })
-    try {
-      let data = {
-        username: username,
-        project: [...projectArr, projectForm]
-      }
-      await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(data),
-      })
-    } catch (err) {
-      console.log('Error in fetch user data', err)
-      navigate('/error')
-    }
+    update([...projectArr, projectForm])
   }
 
   // email send
@@ -392,33 +323,64 @@ function User() {
 
   emailjs.init(import.meta.env.VITE_PUBLIC_KEY);  //"YOUR_PUBLIC_KEY"
 
-  const sendemailSubmit = async(e) => {
+  const sendemailSubmit = async (e) => {
     e.preventDefault();
     setsendemailForm({ sendername: '', senderemail: '', sendermessage: '' })
 
     const templateParams = {
-      receiver_name:userPortfolio?.userInfo?.name,
+      receiver_name: userPortfolio?.userInfo?.name,
       receiver_email: userPortfolio?.personalInfo?.email,
-      sender_name:sendemailForm.sendername,
-      sender_email:sendemailForm.senderemail ,
+      sender_name: sendemailForm.sendername,
+      sender_email: sendemailForm.senderemail,
       message: sendemailForm.sendermessage,
     };
 
     try {
       const response = await emailjs.send(import.meta.env.VITE_SERVICE_KEY, import.meta.env.VITE_TEMPLATE_KEY, templateParams);
       console.log('SUCCESS!', response.status, response.text);
-      alert('Email sent successfully!');
+      toast('Email sent successfully!', {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
     } catch (error) {
       console.error('FAILED...', error);
-      alert('Failed to send email. Please try again.');
+      toast.error('Failed to send email. Please try again.');
     }
 
   }
 
-
-
+ // Loading UI
+ if (isLoading) {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="text-white text-2xl flex items-center">Loading</div>
+      <span className="dot-animation">.</span>
+      <span className="dot-animation">.</span>
+      <span className="dot-animation">.</span>
+    </div>
+  );
+}
   return (
     <>
+    <ToastContainer
+        position="top-right"
+        autoClose={5000}
+        hideProgressBar={false}
+        newestOnTop={false}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="light"
+      />
 
       <Helmet>
         <title>{username}'s Portfolio</title>
@@ -435,7 +397,7 @@ function User() {
 
         {/* heading name on over the image */}
         {/* edit img */}
-        {Object?.keys(userLogin).length > 0 && <img src="/addimg.png" alt="addimg" className='h-8 w-8 sm:h-[60px] sm:w-[60px] filter invert absolute sm:right-[20vw] right-20 sm:top-30 top-80 cursor-pointer' onClick={() => { imageInput.current.style.display = 'flex' }} />}
+        {isLogin && <img src="/addimg.png" alt="addimg" className='h-8 w-8 sm:h-[60px] sm:w-[60px] filter invert absolute sm:right-[20vw] right-20 sm:top-30 top-80 cursor-pointer' onClick={() => { imageInput.current.style.display = 'flex' }} />}
         <div className='pt-4 flex flex-col cmd:gap-40 gap-32 cmd:pl-[40px] cmd:min-h-[83vh] min-h-[65vh]' ref={homeRef}>
           <ul className='flex cmd:gap-4 gap-2 justify-center items-center cmd:justify-start'>
             <li><a href={userPortfolio?.personalInfo?.github || '#'}><img src="/demogit.gif" alt="github" className='w-6 h-6 ' /></a></li>
@@ -445,7 +407,7 @@ function User() {
           </ul>
           <div className='flex flex-col text-[#dedddd] cmd:pl-0 pl-[15px]'>
             {/* edit */}
-            {Object?.keys(userLogin).length > 0 && <img src="/edit.gif" alt="edit" className='w-5 h-5 filter invert cursor-pointer' onClick={() => { userInfoInput.current.style.display = 'flex' }} />}
+            {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 filter invert cursor-pointer' onClick={() => { userInfoInput.current.style.display = 'flex' }} />}
 
             <h4 className='cmd:text-[24px] text-[18px] font-[500] '>{userPortfolio?.userInfo?.greet || 'Hello, I am'}</h4>
             <h1 className='cmd:text-[60px] text-[30px] font-[600] pl-[10px]'>{userPortfolio?.userInfo?.name || 'John Snow'}</h1>
@@ -497,7 +459,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h3 className='text-[28px] font-[400]'>Who I am</h3>
                 {/* edit */}
-                {Object?.keys(userLogin).length > 0 && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { whoiamInput.current.style.display = 'flex' }} />}
+                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { whoiamInput.current.style.display = 'flex' }} />}
 
               </div>
               <div className='flex flex-col gap-4'>
@@ -512,7 +474,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h3 className='text-[28px] font-[400]'>Personal Info</h3>
                 {/* edit */}
-                {Object?.keys(userLogin).length > 0 && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { personalInput.current.style.display = 'flex' }} />}
+                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { personalInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-2'>
                 <span><span className='font-[500]'>Birthdate</span> : {userPortfolio?.personalInfo?.birth || '19/04/1108'}</span>
@@ -531,7 +493,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h3 className='text-[28px] font-[400]'>My Expertise</h3>
                 {/* edit */}
-                {Object?.keys(userLogin).length > 0 && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { expertiseInput.current.style.display = 'flex' }} />}
+                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { expertiseInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-4'>
                 {userPortfolio?.expertise ? userPortfolio?.expertise?.map((item) => {
@@ -561,7 +523,7 @@ function User() {
             <div className='flex gap-3 items-center'>
               <h2 className='cmd:text-[34px] text-[28px] font-[400] '>My projects</h2>
               {/* edit */}
-              {Object?.keys(userLogin).length > 0 && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { projectInput.current.style.display = 'flex' }} />}
+              {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { projectInput.current.style.display = 'flex' }} />}
             </div>
             <div className='flex flex-wrap justify-center gap-10'>
 
@@ -576,7 +538,7 @@ function User() {
                   </div>
                 </div>
               }) : <>
-                <div  className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('1') }} onMouseLeave={() => setHoveredId(null)}>
+                <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('1') }} onMouseLeave={() => setHoveredId(null)}>
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '1' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://need-money.vercel.app/">View on Site &rarr;</a></div>
 
@@ -586,7 +548,7 @@ function User() {
                     <p><span className='font-[500]'>Use</span> : NextJS , Mongoose , Tailwind CSS , Next-auth js , RazorPay</p>
                   </div>
                 </div>
-                <div  className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('2') }} onMouseLeave={() => setHoveredId(null)}>
+                <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('2') }} onMouseLeave={() => setHoveredId(null)}>
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '2' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://need-money.vercel.app/">View on Site &rarr;</a></div>
 
@@ -596,7 +558,7 @@ function User() {
                     <p><span className='font-[500]'>Use</span> : NextJS , Mongoose , Tailwind CSS , Next-auth js , RazorPay</p>
                   </div>
                 </div>
-                <div  className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('3') }} onMouseLeave={() => setHoveredId(null)}>
+                <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('3') }} onMouseLeave={() => setHoveredId(null)}>
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '3' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://need-money.vercel.app/">View on Site &rarr;</a></div>
 
@@ -606,7 +568,7 @@ function User() {
                     <p><span className='font-[500]'>Use</span> : NextJS , Mongoose , Tailwind CSS , Next-auth js , RazorPay</p>
                   </div>
                 </div>
-                <div  className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('4') }} onMouseLeave={() => setHoveredId(null)}>
+                <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('4') }} onMouseLeave={() => setHoveredId(null)}>
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '4' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://need-money.vercel.app/">View on Site &rarr;</a></div>
 
@@ -626,7 +588,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h2 className='cmd:text-[34px] text-[28px] font-[400] '>Skills</h2>
                 {/* edit */}
-                {Object?.keys(userLogin).length > 0 && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { skillInput.current.style.display = 'flex' }} />}
+                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { skillInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-4 py-10 border shadow-[2px_4px_4px_rgba(0,0,0,0.4)]  px-10  cmd:w-[420px] w-[280px]'>
 
@@ -682,7 +644,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h2 className='cmd:text-[34px] text-[28px] font-[400] '>Language</h2>
                 {/* edit */}
-                {Object?.keys(userLogin).length > 0 && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { languageInput.current.style.display = 'flex' }} />}
+                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { languageInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-4 py-10 border shadow-[2px_4px_4px_rgba(0,0,0,0.4)]  px-10 cmd:w-[420px] w-[280px]'>
 

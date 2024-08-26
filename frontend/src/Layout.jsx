@@ -3,6 +3,7 @@ import Navbar from './components/Navbar'
 import Footer from './components/Footer'
 import { HelmetProvider } from 'react-helmet-async';
 import User from './components/User';
+import Reload from './components/Reload';
 
 function Layout({ children }) {
   // check children is <User/> or not 
@@ -10,6 +11,7 @@ function Layout({ children }) {
 
   return (
     <HelmetProvider>
+      <Reload/>
       {isUserComponent ? (children) : 
       (<>
         <Navbar />

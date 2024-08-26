@@ -5,9 +5,12 @@ import Home from './Home';
 function Dashboard() {
   const navigate = useNavigate()
   const [userInfo, setUserInfo] = useState({})
+  const [isLoading, setIsLoading] = useState(false);
+  
 
   useEffect(() => {
     const getUserData = async () => {
+      setIsLoading(true); // Set loading state to true
       try {
         let response = await fetch(`${import.meta.env.VITE_API_URL}/isLogin`, { method: 'GET', credentials: 'include', })
         let data = await response.json()
@@ -15,6 +18,8 @@ function Dashboard() {
       } catch (err) {
         console.log('Error in fetch user data ',err)
         navigate('/error')
+      } finally {
+        setIsLoading(false); // Set loading state to false
       }
     }
     getUserData()
@@ -23,6 +28,17 @@ function Dashboard() {
   if (Object.keys(userInfo).length <= 0) {
     console.log("navigate to login",userInfo)
     navigate('/login')
+  }
+  // Loading UI
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+        <div className="text-white text-2xl flex items-center">Loading</div>
+        <span className="dot-animation">.</span>
+        <span className="dot-animation">.</span>
+        <span className="dot-animation">.</span>
+      </div>
+    );
   }
 
   return (

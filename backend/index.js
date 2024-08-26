@@ -109,18 +109,31 @@ app.post('/userPortfolio',async(req,res)=>{
         console.log('error in fetch portfoli',err)
     }
 })
+
 // update portfolio
-app.post('/updatePortfolio',async(req,res)=>{
-    try{
-        await Portfolio.findOneAndUpdate(
+app.post('/updatePortfolio', async (req, res) => {
+    try {
+        const updatedPortfolio = await Portfolio.findOneAndUpdate(
             { username: req.body.username }, // Find the document by username
             { $set: req.body }, // Merge new data with existing data
             { new: true, runValidators: true, upsert: true } // Options: return updated document, run schema validators, create if not found
         );
-    }catch(err){
-        console.log('error in update portfoli',err)
+        // Send the updated portfolio as a response
+        res.json({
+            success: true,
+            message: 'Portfolio updated successfully !',
+            data: updatedPortfolio
+        });
+    } catch (err) {
+        console.log('Error in update portfolio', err);
+        res.json({
+            success: false,
+            message: 'Failed to update portfolio !',
+            error: err.message
+        });
     }
-})
+});
+
 
 app.get('/',(req,res)=>{
     res.json({backend:'Done'})
