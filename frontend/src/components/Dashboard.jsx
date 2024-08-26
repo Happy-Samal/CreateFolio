@@ -4,42 +4,28 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import Home from './Home';
 function Dashboard() {
   const navigate = useNavigate()
-  const [userInfo, setUserInfo] = useState({})
-  const [isLoading, setIsLoading] = useState(false);
+  const [userData, setUserdata] = useState({})
   
 
   useEffect(() => {
-    const getUserData = async () => {
-      setIsLoading(true); // Set loading state to true
+    const isLogin = async () => {
       try {
         let response = await fetch(`${import.meta.env.VITE_API_URL}/isLogin`, { method: 'GET', credentials: 'include', })
         let data = await response.json()
-        setUserInfo(data)
+        setUserdata(data)
       } catch (err) {
-        console.log('Error in fetch user data ',err)
+        console.log('Error in fetch user data',err)
         navigate('/error')
-      } finally {
-        setIsLoading(false); // Set loading state to false
       }
     }
-    getUserData()
-  }, [])
+      isLogin()
+    }, [])
 
-  if (Object.keys(userInfo).length <= 0) {
-    console.log("navigate to login",userInfo)
+  if (Object.keys(userData).length <= 0) {
+    console.log("navigate to login",userData)
     navigate('/login')
   }
-  // Loading UI
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div className="text-white text-2xl flex items-center">Loading</div>
-        <span className="dot-animation">.</span>
-        <span className="dot-animation">.</span>
-        <span className="dot-animation">.</span>
-      </div>
-    );
-  }
+
 
   return (
     <>
