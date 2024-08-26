@@ -51,11 +51,11 @@ function User() {
       } catch (err) {
         console.log('Error in fetch user data', err)
         navigate('/error')
-      } finally {
+      }finally {
         setIsLoading(false); // Set loading state to false
       }
     }
-    if (username !== 'demo') {
+    if(username !== 'demo'){
       getUserPortfolio()
     }
   }, [updateTrigger])
@@ -116,7 +116,7 @@ function User() {
     try {
       let data = {
         username: username,
-        updates: updates
+        updates:updates
       };
       const response = await fetch(`${import.meta.env.VITE_API_URL}/updatePortfolio`, {
         method: 'POST',
@@ -126,20 +126,20 @@ function User() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      setUpdateTrigger(true);
+      toast(result.message, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
       setTimeout(() => {
-        toast(result.message, {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-          transition: Bounce,
-        });
-      }, 1000);
+        setUpdateTrigger(true);
+      }, 1100);
     } catch (err) {
       console.log('Error in fetch user data', err);
       toast.error('Error updating user info. Please try again.');
@@ -156,7 +156,7 @@ function User() {
   }
   const userInfoSave = () => {
     userInfoInput.current.style.display = 'none'
-    update({ userInfo: userInfoForm })
+    update({userInfo:userInfoForm})
   }
 
   // whoiam input
@@ -166,9 +166,9 @@ function User() {
   const whoiamChange = (e) => {
     setwhoiamForm({ ...whoiamForm, [e.target.name]: e.target.value })
   }
-  const whoiamSave = () => {
+  const whoiamSave =() => {
     whoiamInput.current.style.display = 'none'
-    update({ whoiam: whoiamForm })
+    update({whoiam:whoiamForm})
   }
   // personalInfo input
   const personalInput = useRef()
@@ -179,7 +179,7 @@ function User() {
   }
   const personalSave = async () => {
     personalInput.current.style.display = 'none'
-    update({ personalInfo: personalForm })
+    update({personalInfo:personalForm})
   }
 
   // expertise input
@@ -198,7 +198,7 @@ function User() {
     expertiseInput.current.style.display = 'none'
     setexpertiseArr([])
     setexpertiseForm({ main: '', sub: '' });
-    update({ expertise: [...expertiseArr, expertiseForm] })
+    update({expertise:[...expertiseArr, expertiseForm]})
   }
   // skill input
   const skillInput = useRef()
@@ -216,7 +216,7 @@ function User() {
     skillInput.current.style.display = 'none'
     setskillArr([])
     setskillForm({ slang: '', spercentage: '' });
-    update({ skill: [...skillArr, skillForm] })
+    update({skill:[...skillArr, skillForm]})
   }
 
   // Language input
@@ -235,7 +235,7 @@ function User() {
     languageInput.current.style.display = 'none'
     setlanguageArr([])
     setlanguageForm({ llang: '', lpercentage: '' });
-    update({ language: [...languageArr, languageForm] })
+    update({language:[...languageArr, languageForm]})
   }
 
   // images
@@ -262,7 +262,7 @@ function User() {
   }
   const imageSave = async () => {
     imageInput.current.style.display = 'none'
-    update({ images: imageForm })
+    update({images:imageForm})
   }
 
   // project input
@@ -306,7 +306,7 @@ function User() {
     projectInput.current.style.display = 'none'
     setlanguageArr([])
     setProjectForm({ pname: '', puse: '', plink: '', pimage: '' })
-    update({ project: [...projectArr, projectForm] })
+    update({project:[...projectArr, projectForm]})
   }
 
   // email send
@@ -352,20 +352,20 @@ function User() {
 
   }
 
-  // Loading UI
-  if (isLoading) {
-    return (
-      <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-        <div className="text-white text-2xl flex items-center">Loading</div>
-        <span className="dot-animation">.</span>
-        <span className="dot-animation">.</span>
-        <span className="dot-animation">.</span>
-      </div>
-    );
-  }
+ // Loading UI
+ if (isLoading) {
+  return (
+    <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+      <div className="text-white text-2xl flex items-center">Loading</div>
+      <span className="dot-animation">.</span>
+      <span className="dot-animation">.</span>
+      <span className="dot-animation">.</span>
+    </div>
+  );
+}
   return (
     <>
-      <ToastContainer
+    <ToastContainer
         position="top-right"
         autoClose={5000}
         hideProgressBar={false}
