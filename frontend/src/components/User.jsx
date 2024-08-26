@@ -139,7 +139,7 @@ function User() {
       });
       setTimeout(() => {
         setUpdateTrigger(true);
-      }, 1000);
+      }, 1500);
     } catch (err) {
       console.log('Error in fetch user data', err);
       toast.error('Error updating user info. Please try again.');
