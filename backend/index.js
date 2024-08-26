@@ -1,5 +1,4 @@
 import express from 'express';
-import dotenv from 'dotenv';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import session from 'express-session';
@@ -7,8 +6,7 @@ import passport from './passportConfig.js';
 import User from './models/User.js';
 import Portfolio from './models/Portfolio.js'
 import MongoStore from 'connect-mongo'; // Import connect-mongo
-
-dotenv.config();
+import 'dotenv/config';
 
 const app = express();
 const port = process.env.PORT || 3000;

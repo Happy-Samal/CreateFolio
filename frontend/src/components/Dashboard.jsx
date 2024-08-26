@@ -34,8 +34,8 @@ function Dashboard() {
         <meta name="description" content="CreateFolio - provide a platform where you make your portfolio in second" />
       </Helmet>
       <Home />
-      <div className='absolute z-20 top-0 w-screen flex justify-center min-h-screen '>
-        <div className=" text-white flex flex-col min-h-[70vh] sm:min-h-[65vh] w-full sm:w-[50vw] bg-black bg-opacity-20 backdrop-blur-[3px] sticky top-40 px-20 py-10 rounded-2xl border gap-10 items-center text-center sm:text-left">
+      <div className='absolute z-20 top-32 w-screen flex justify-center min-h-screen '>
+        <div className=" text-white flex flex-col min-h-[70vh] sm:min-h-[65vh] w-full sm:w-[50vw] bg-black bg-opacity-20 backdrop-blur-[3px] absolute top-0 px-20 py-10 rounded-2xl border gap-10 items-center text-center sm:text-left">
           <div>
           <p className='sm:text-[22px] text-[14px] font-semibold'>Welcome to ᑕᖇEᗩTEᖴOᒪIO</p>
           <p className='sm:text-[12px] text-[6px]'>𝚖𝚊𝚔𝚎 𝚢𝚘𝚞𝚛 𝚙𝚘𝚛𝚝𝚘𝚏𝚘𝚕𝚒𝚘 𝚒𝚗 𝚜𝚎𝚌</p>
