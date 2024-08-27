@@ -520,8 +520,8 @@ function User() {
               <img src={userPortfolio?.images?.profile || "/avatar.jpg"} alt="dp" className='w-[170px] h-[170px] inset-0 object-cover ' />
             </div>
             <div className={`cmd:flex flex-col min-w-[180px] h-full items-center top-[40px]  ${istop ? 'cvisible' : 'invisible'} absolute left-[44%]  gap-[2px] hidden`}>
-              <span className='text-xl font-[400]'>{userPortfolio?.userInfo?.name || 'John Snow'}</span>
-              <span className='text-[14px] text-[#616161] font-[400]'>{userPortfolio?.userInfo?.udesc || 'King of North and Queen Slayer'}</span>
+              <span className='text-xl font-[400]'>{userPortfolio?.userInfo?.name || 'John Doe'}</span>
+              <span className='text-[14px] text-[#616161] font-[400]'>{userPortfolio?.userInfo?.udesc || 'Web Developer and UX-Designer'}</span>
             </div>
             <div className='cmd:flex gap-8 text-lg font-semibold hidden'>
               <button onClick={(e) => { navBtnClick(e) }} name='skill' className={btnColor('skill')}>Skills</button>
