@@ -466,7 +466,7 @@ function User() {
 
       {/* bg image */}
       <div className='w-screen cmd:min-h-[83vh] min-h-[65vh] fixed bg-black'>
-        <img src={userPortfolio?.images?.cover || "/johnbg.jpg"} alt="bg" className=' absolute inset-0 object-cover w-full h-full opacity-60' />
+        <img src={userPortfolio?.images?.cover || "/john1.jpg"} alt="bg" className=' absolute inset-0 object-cover w-full h-full opacity-60' />
       </div>
 
       {/* Absolute div */}
@@ -487,8 +487,8 @@ function User() {
             {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 filter invert cursor-pointer' onClick={() => { userInfoInput.current.style.display = 'flex' }} />}
 
             <h4 className='cmd:text-[24px] text-[18px] font-[500] '>{userPortfolio?.userInfo?.greet || 'Hello, I am'}</h4>
-            <h1 className='cmd:text-[60px] text-[30px] font-[600] pl-[10px]'>{userPortfolio?.userInfo?.name || 'John Snow'}</h1>
-            <h6 className='cmd:text-[17px] text-[13px] '>{userPortfolio?.userInfo?.udesc || 'King of North and Queen Slayer'}</h6>
+            <h1 className='cmd:text-[60px] text-[30px] font-[600] pl-[10px]'>{userPortfolio?.userInfo?.name || 'John Doe'}</h1>
+            <h6 className='cmd:text-[17px] text-[13px] '>{userPortfolio?.userInfo?.udesc || 'Web developer || UX-Designer'}</h6>
           </div>
         </div>
 
@@ -517,7 +517,7 @@ function User() {
               <button onClick={(e) => { navBtnClick(e) }} name='project' className={btnColor('project')}>Projects</button>
             </div>
             <div className={`cmd:flex w-[170px] h-[170px] rounded-full  justify-center items-center overflow-hidden border-[10px] border-white   absolute  left-[44%]  ${istop ? 'cstminvisible' : 'cstmvisible'} shadow-[2px_4px_4px_rgba(0,0,0,0.7)]  hidden`} ref={dpRef}>
-              <img src={userPortfolio?.images?.profile || "/johndp.webp"} alt="dp" className='w-[170px] h-[170px] inset-0 object-cover ' />
+              <img src={userPortfolio?.images?.profile || "/avatar.jpg"} alt="dp" className='w-[170px] h-[170px] inset-0 object-cover ' />
             </div>
             <div className={`cmd:flex flex-col min-w-[180px] h-full items-center top-[40px]  ${istop ? 'cvisible' : 'invisible'} absolute left-[44%]  gap-[2px] hidden`}>
               <span className='text-xl font-[400]'>{userPortfolio?.userInfo?.name || 'John Snow'}</span>
@@ -540,7 +540,7 @@ function User() {
 
               </div>
               <div className='flex flex-col gap-4'>
-                <span className='text-[20px] font-[400]'>{userPortfolio?.whoiam?.about || 'King of North and Queen Slayer'}</span>
+                <span className='text-[20px] font-[400]'>{userPortfolio?.whoiam?.about || 'Passionate Web Developer and UX-Designer'}</span>
                 <p className='text-[14px]'>{userPortfolio?.whoiam?.wdesc || 'Lorem ipsum dolor sit amet, consectetur adipisicing elit.sit amet, Qui deserunt consequatur fugit repellendusillo voluptas?Lorem ?'}</p>
               </div>
               <div className='border border-black rounded-2xl px-3 py-1 w-48 shadow-[2px_4px_4px_rgba(0,0,0,0.8)]'>
@@ -554,10 +554,10 @@ function User() {
                 {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { personalInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-2'>
-                <span><span className='font-[500]'>Birthdate</span> : {userPortfolio?.personalInfo?.birth || '19/04/1108'}</span>
-                <span><span className='font-[500]'>Email</span> : {userPortfolio?.personalInfo?.email || 'bastard@gmail.com'}</span>
+                <span><span className='font-[500]'>Birthdate</span> : {userPortfolio?.personalInfo?.birth || '19/04/1980'}</span>
+                <span><span className='font-[500]'>Email</span> : {userPortfolio?.personalInfo?.email || 'createfolio@gmail.com'}</span>
                 <span><span className='font-[500]'>Phone</span>: {userPortfolio?.personalInfo?.phone || '(123) 456-7890'}</span>
-                <span><span className='font-[500]'>Address</span>: {userPortfolio?.personalInfo?.address || 'Winterfell  North Kingdom'}</span>
+                <span><span className='font-[500]'>Address</span>: {userPortfolio?.personalInfo?.address || '003 Creator Lane, Innovation City, CA 3377'}</span>
               </div>
               <ul className='flex gap-4'>
                 <li><a href={userPortfolio?.personalInfo?.github || '#'}><img src="/demogit.gif" alt="github" className='w-6 h-6 filter invert' /></a></li>
@@ -621,12 +621,12 @@ function User() {
               }) : <>
                 <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('1') }} onMouseLeave={() => setHoveredId(null)}>
 
-                  <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '1' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://need-money.vercel.app/">View on Site &rarr;</a></div>
+                  <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '1' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://create-folio.vercel.app/">View on Site &rarr;</a></div>
 
-                  <img src="/needmoney.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img src="/createfolio.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
-                    <p><span className='font-[500]'>Name :  </span>Need Money - Used for help your friend and favorite cretor</p>
-                    <p><span className='font-[500]'>Use</span> : NextJS , Mongoose , Tailwind CSS , Next-auth js , RazorPay</p>
+                    <p><span className='font-[500]'>Name :  </span>Create Folio - Create your portfolio in sec</p>
+                    <p><span className='font-[500]'>Use</span> : ReactJs , ExpressJs, Mongoose , Tailwind CSS , PassportJs , EmailJs , Leaflet</p>
                   </div>
                 </div>
                 <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('2') }} onMouseLeave={() => setHoveredId(null)}>
@@ -641,22 +641,42 @@ function User() {
                 </div>
                 <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('3') }} onMouseLeave={() => setHoveredId(null)}>
 
-                  <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '3' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://need-money.vercel.app/">View on Site &rarr;</a></div>
+                  <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '3' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://password-manager-localstorage.vercel.app/">View on Site &rarr;</a></div>
 
-                  <img src="/needmoney.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img src="/passwordmanager.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
-                    <p><span className='font-[500]'>Name :  </span>Need Money - Used for help your friend and favorite cretor</p>
-                    <p><span className='font-[500]'>Use</span> : NextJS , Mongoose , Tailwind CSS , Next-auth js , RazorPay</p>
+                    <p><span className='font-[500]'>Name :  </span>Password Manager - Used for Save your Password.</p>
+                    <p><span className='font-[500]'>Use</span> : React JS , Express JS ,  Mongoose , Tailwind CSS </p>
                   </div>
                 </div>
                 <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('4') }} onMouseLeave={() => setHoveredId(null)}>
 
-                  <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '4' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://need-money.vercel.app/">View on Site &rarr;</a></div>
+                  <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '4' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://happysamal.freewebhostmost.com/">View on Site &rarr;</a></div>
 
-                  <img src="/needmoney.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img src="/musicplayer.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
-                    <p><span className='font-[500]'>Name :  </span>Need Money - Used for help your friend and favorite cretor</p>
-                    <p><span className='font-[500]'>Use</span> : NextJS , Mongoose , Tailwind CSS , Next-auth js , RazorPay</p>
+                    <p><span className='font-[500]'>Name :  </span>Playio Music Player - Used for listen songs.</p>
+                    <p><span className='font-[500]'>Use</span> : HTML , CSS , Javascript</p>
+                  </div>
+                </div>
+                <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('5') }} onMouseLeave={() => setHoveredId(null)}>
+
+                  <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '5' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://rock-paper-scissors-happy-samal.vercel.app/">View on Site &rarr;</a></div>
+
+                  <img src="/rockpaper.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
+                    <p><span className='font-[500]'>Name :  </span>Rock Paper Scrisors - Used for play game.</p>
+                    <p><span className='font-[500]'>Use</span> : HTML , CSS , Javascript</p>
+                  </div>
+                </div>
+                <div className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId('6') }} onMouseLeave={() => setHoveredId(null)}>
+
+                  <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '6' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://tic-tac-toe-happy-samal.vercel.app/">View on Site &rarr;</a></div>
+
+                  <img src="/tictac.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
+                    <p><span className='font-[500]'>Name :  </span>Tic Tac Toe - Used for play game.</p>
+                    <p><span className='font-[500]'>Use</span> : HTML , CSS , Javascript</p>
                   </div>
                 </div>
               </>}
@@ -797,14 +817,14 @@ function User() {
                     <img src="/location.gif" alt="location" className='w-6 h-6' />
                     <span className='flex flex-col'>
                       <span className='font-[500]'>Address :</span>
-                      <span className='cmd:max-w-[280px] max-w-[200px] text-ellipsis overflow-hidden'>{userPortfolio?.personalInfo?.address || 'Winterfell North Kingdom'}</span>
+                      <span className='cmd:max-w-[280px] max-w-[200px] text-ellipsis overflow-hidden'>{userPortfolio?.personalInfo?.address || '003 Creator Lane, Innovation City, CA 3377'}</span>
                     </span>
                   </div>
                   <div className='flex gap-2'>
                     <img src="/email.gif" alt="email" className='w-6 h-6' />
                     <span className='flex flex-col'>
                       <span className='font-[500]'>Email :</span>
-                      <span>{userPortfolio?.personalInfo?.email || 'bastard@gmail.com'}</span>
+                      <span>{userPortfolio?.personalInfo?.email || 'createfolio@gmail.com'}</span>
                     </span>
                   </div>
                 </div>
