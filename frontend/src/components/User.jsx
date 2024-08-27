@@ -33,6 +33,10 @@ function User() {
 
 
   const [userPortfolio, setUserPortfolio] = useState({})
+  const [userInfoForm, setuserInfoForm] = useState({})
+  const [whoiamForm, setwhoiamForm] = useState({})
+  const [personalForm, setpersonalForm] = useState({})
+  const [imageForm, setimageForm] = useState({})
   useEffect(() => {
     const getUserPortfolio = async () => {
       try {
@@ -47,6 +51,10 @@ function User() {
         })
         let portfolio = await response.json()
         setUserPortfolio(portfolio)
+        setuserInfoForm(portfolio.userInfo?portfolio.userInfo:{})
+        setwhoiamForm(portfolio.whoiam?portfolio.whoiam:{})
+        setpersonalForm(portfolio.personalInfo?portfolio.personalInfo:{})
+        setimageForm(portfolio.images?portfolio.images:{})
         setUpdateTrigger(false)
       } catch (err) {
         console.log('Error in fetch user data', err)
@@ -59,7 +67,7 @@ function User() {
       getUserPortfolio()
     }
   }, [updateTrigger])
-
+  
   const [istop, setIstop] = useState(false)
   const dpRef = useRef()
   const siteRef = useRef()
@@ -112,7 +120,6 @@ function User() {
 
 
   const update = async (updates) => {
-    console.log(updates)
     try {
       let data = {
         username: username,
@@ -147,37 +154,64 @@ function User() {
     }
   }
 
+  // delete item
+  const deleteClick =async(item)=>{
+    let cnf = confirm('Are you sure to delete this item ??')
+    if(cnf){
+      const response = await fetch(`${import.meta.env.VITE_API_URL}/deleteItem`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(item),
+      });
+      const result = await response.json()
+      toast(result.msg, {
+        position: "top-right",
+        autoClose: 1000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+        theme: "light",
+        transition: Bounce,
+      });
+      setTimeout(() => {
+        setUpdateTrigger(true);
+      }, 1200);
+    }
+  }
+
   // userInfo input
   const userInfoInput = useRef()
-  const [userInfoForm, setuserInfoForm] = useState({ greet: '', name: '', udesc: '' })
-
   const userInfoChange = (e) => {
     setuserInfoForm({ ...userInfoForm, [e.target.name]: e.target.value })
   }
-  const userInfoSave = () => {
+  const userInfoSave = (e) => {
+    e.preventDefault()
     userInfoInput.current.style.display = 'none'
     update({userInfo:userInfoForm})
   }
 
   // whoiam input
   const whoiamInput = useRef()
-  const [whoiamForm, setwhoiamForm] = useState({ about: '', wdesc: '' })
-
   const whoiamChange = (e) => {
     setwhoiamForm({ ...whoiamForm, [e.target.name]: e.target.value })
   }
-  const whoiamSave =() => {
+  const whoiamSave =(e) => {
+    e.preventDefault()
     whoiamInput.current.style.display = 'none'
     update({whoiam:whoiamForm})
   }
+
   // personalInfo input
   const personalInput = useRef()
-  const [personalForm, setpersonalForm] = useState({ birth: '', email: '', phone: '', address: '', github: '', facebook: '', instagram: '', linkedin: '' })
-
   const personalChange = (e) => {
     setpersonalForm({ ...personalForm, [e.target.name]: e.target.value })
   }
-  const personalSave = async () => {
+  const personalSave = (e) => {
+    e.preventDefault()
     personalInput.current.style.display = 'none'
     update({personalInfo:personalForm})
   }
@@ -191,10 +225,23 @@ function User() {
     setexpertiseForm({ ...expertiseForm, [e.target.name]: e.target.value })
   }
   const expertiseAddClicked = () => {
+    toast('expertise added !', {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
     setexpertiseArr([...expertiseArr, expertiseForm]);
     setexpertiseForm({ main: '', sub: '' });
+    
   }
-  const expertiseSave = async () => {
+  const expertiseSave = async (e) => {
+    e.preventDefault()
     expertiseInput.current.style.display = 'none'
     setexpertiseArr([])
     setexpertiseForm({ main: '', sub: '' });
@@ -209,10 +256,22 @@ function User() {
     setskillForm({ ...skillForm, [e.target.name]: e.target.value })
   }
   const skillAddClicked = () => {
+    toast('skill added !', {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
     setskillArr([...skillArr, skillForm]);
     setskillForm({ slang: '', spercentage: '' });
   }
-  const skillSave = async () => {
+  const skillSave = async (e) => {
+    e.preventDefault()
     skillInput.current.style.display = 'none'
     setskillArr([])
     setskillForm({ slang: '', spercentage: '' });
@@ -228,10 +287,22 @@ function User() {
     setlanguageForm({ ...languageForm, [e.target.name]: e.target.value })
   }
   const languageAddClicked = () => {
+    toast('language added !', {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
     setlanguageArr([...languageArr, languageForm]);
     setlanguageForm({ llang: '', lpercentage: '' });
   }
-  const languageSave = async () => {
+  const languageSave = async (e) => {
+    e.preventDefault()
     languageInput.current.style.display = 'none'
     setlanguageArr([])
     setlanguageForm({ llang: '', lpercentage: '' });
@@ -241,11 +312,9 @@ function User() {
   // images
   const imageInput = useRef()
   const [message, setMessage] = useState('');
-  const [imageForm, setimageForm] = useState({ cover: '', profile: '', resume: '' })
   const imageChange = (e) => {
     setMessage('')
     const file = e.target.files[0]
-
     if (file.size > 1048576) {
       setMessage('File size exceeds 1MB.');
       return;
@@ -294,6 +363,17 @@ function User() {
   }
 
   const projectAddClicked = () => {
+    toast('project added !', {
+      position: "top-right",
+      autoClose: 1000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      progress: undefined,
+      theme: "light",
+      transition: Bounce,
+    });
     setprojectArr([...projectArr, projectForm])
     setProjectForm({ pname: '', puse: '', plink: '', pimage: '' })
 
@@ -302,7 +382,8 @@ function User() {
       pimageInput.current.value = ''; // Clear the file input value
     }
   }
-  const projectSave = async () => {
+  const projectSave = async (e) => {
+    e.preventDefault()
     projectInput.current.style.display = 'none'
     setlanguageArr([])
     setProjectForm({ pname: '', puse: '', plink: '', pimage: '' })
@@ -494,8 +575,12 @@ function User() {
               <div className='flex flex-col gap-4'>
                 {userPortfolio?.expertise ? userPortfolio?.expertise?.map((item) => {
                   return <div key={item._id}>
+                    <div className='flex gap-1 items-center'>
                     <span className='text-[20px] font-[400]'>{item.main}</span>
+                    {isLogin && <img src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"expertise", id:item._id})}}/>}
+                    </div>
                     <p className='text-[14px]'>{item.sub}</p>
+                    
                   </div>
                 }) : <><div>
                   <span className='text-[20px] font-[400]'>UX Design</span>
@@ -525,7 +610,7 @@ function User() {
 
               {userPortfolio?.project ? userPortfolio?.project?.map((item) => {
                 return <div key={item._id} className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId(item._id) }} onMouseLeave={() => setHoveredId(null)}>
-
+                  {isLogin && <img src="/delete.gif" alt="delete" className='w-6 h-6 cursor-pointer absolute bottom-1 right-1' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"project", id:item._id})}}/>}
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId === item._id ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href={item.plink}>View on Site &rarr;</a></div>
                   <img src={item.pimage} alt={item.pname} className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
@@ -590,7 +675,10 @@ function User() {
 
                 {userPortfolio?.skill ? userPortfolio.skill?.map((item) => {
                   return <div key={item._id} className='flex flex-col gap-2'>
-                    <span>{item.slang}</span>
+                    <div className='flex items-center gap-1'>
+                    <span className='font-semibold'>{item.slang}</span>
+                    {isLogin && <img src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"skill", id:item._id})}}/>}
+                    </div>
                     <div className=' h-[5px] bg-[#d2d2d2] rounded-md relative'>
                       <span className='bg-[#f85c70] h-full absolute' style={{ width: `${Number(item.spercentage)}%` }} ></span>
                     </div>
@@ -646,7 +734,10 @@ function User() {
 
                 {userPortfolio?.language ? userPortfolio.language?.map((item) => {
                   return <div key={item._id} className='flex flex-col gap-2'>
-                    <span>{item.llang}</span>
+                    <div className='flex items-center gap-1'>
+                    <span className='font-semibold'>{item.llang}</span>
+                    {isLogin && <img src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"language", id:item._id})}}/>}
+                    </div>
                     <div className=' h-[5px] bg-[#d2d2d2] rounded-md relative'>
                       <span className='bg-[#f85c70] h-full absolute' style={{ width: `${Number(item.lpercentage)}%` }} ></span>
                     </div>
@@ -741,158 +832,194 @@ function User() {
 
           {/* userInfo input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={userInfoInput} >
-            <div className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
+            <form onSubmit={userInfoSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
               <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { userInfoInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="greet" className='px-4'>Enter Greet</label>
-                  <input type="text" name='greet' id='greet' placeholder='eg- Hello, I am' value={userInfoForm.greet}
-                    onChange={userInfoChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='greet' id='greet'  value={userInfoForm.greet ||  ""}
+                    onChange={userInfoChange} required placeholder='eg - Hello , I am' className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="name" className='px-4'>Enter your name</label>
-                  <input type="text" name='name' id='name' placeholder='eg- John Snow'
-                    value={userInfoForm.name} onChange={userInfoChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='name' id='name' 
+                    value={userInfoForm.name ||  ""} onChange={userInfoChange} required placeholder='eg - Jon Snow' className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="udesc" className='px-4'>Enter description</label>
-                  <input type="text" name='udesc' id='udesc' placeholder='eg- Web Developer | Web Designer' value={userInfoForm.udesc} onChange={userInfoChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='udesc' id='udesc'  value={userInfoForm.udesc ||  ""} onChange={userInfoChange} required placeholder='eg - Web developer' className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
               </div>
-              <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={userInfoSave}>Save</button>
-            </div>
+              <button type='submit' className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' >Save</button>
+            </form>
           </div>
 
           {/* whoiam input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={whoiamInput} >
-            <div className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
+            <form onSubmit={whoiamSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
               <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { whoiamInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="about" className='px-4'>Enter about</label>
-                  <input type="text" name='about' id='about' placeholder='eg- Student at xyz college or Employee at xyz company' value={whoiamForm.about}
+                  <input type="text" name='about' id='about' required placeholder='eg- Student at xyz college or Employee at xyz company' value={whoiamForm.about || ""}
                     onChange={whoiamChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="wdesc" className='px-4'>Enter description</label>
-                  <textarea name='wdesc' id='wdesc' placeholder='Write about yourself' value={whoiamForm.wdesc} onChange={whoiamChange} rows='5' className='rounded-3xl outline-none px-3 py-2 bg-transparent border placeholder:text-white' ></textarea>
+                  <textarea name='wdesc' id='wdesc' placeholder='Write about yourself' value={whoiamForm.wdesc || ""} onChange={whoiamChange} rows='5' required className='rounded-3xl outline-none px-3 py-2 bg-transparent border placeholder:text-white' ></textarea>
                 </div>
               </div>
-              <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={whoiamSave}>Save</button>
-            </div>
+              <button type='submit' className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' >Save</button>
+            </form>
           </div>
 
           {/* personalInfo input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={personalInput} >
-            <div className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex overflow-y-scroll scrollbar-rounded' >
+            <form  onSubmit={personalSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex overflow-y-scroll scrollbar-rounded' >
               <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { personalInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="birth" className='px-4'>Enter your birth date</label>
-                  <input type="text" name='birth' id='birth' placeholder='eg- 27/01/2001' value={personalForm.birth}
-                    onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='birth' id='birth' placeholder='eg- 27/01/2001' value={personalForm.birth || ""}
+                    onChange={personalChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="email" className='px-4'>Enter your email</label>
                   <input type="email" name='email' id='email' placeholder='eg- xyz@gmail.com'
-                    value={personalForm.email} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                    value={personalForm.email || ""} onChange={personalChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="phone" className='px-4'>Enter your phone number</label>
-                  <input type="text" name='phone' id='phone' placeholder='eg- 833224242' value={personalForm.phone} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='phone' id='phone' placeholder='eg- 833224242' value={personalForm.phone || ""} onChange={personalChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="address" className='px-4'>Enter your address</label>
-                  <input type="text" name='address' id='address' placeholder='eg- Bhubaneswar , odisha' value={personalForm.address} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='address' id='address' placeholder='eg- Bhubaneswar , odisha' value={personalForm.address || ""} onChange={personalChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="github" className='px-4'>Enter github Link</label>
-                  <input type="text" name='github' id='github' placeholder='eg- https://github.io/xyz' value={personalForm.github} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='github' id='github' placeholder='eg- https://github.io/xyz' value={personalForm.github || ""} onChange={personalChange}  className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="facebook" className='px-4'>Enter facebook Link</label>
-                  <input type="text" name='facebook' id='facebook' placeholder='eg- https://facebook/xyz' value={personalForm.facebook} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='facebook' id='facebook' placeholder='eg- https://facebook/xyz' value={personalForm.facebook || ""} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="instagram" className='px-4'>Enter instagram Link</label>
-                  <input type="text" name='instagram' id='instagram' placeholder='eg- https://instagram/xyz' value={personalForm.instagram} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='instagram' id='instagram' placeholder='eg- https://instagram/xyz' value={personalForm.instagram || ""} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="linkedin" className='px-4'>Enter linkedin Link</label>
-                  <input type="text" name='linkedin' id='linkedin' placeholder='eg- https://linkedin/xyz' value={personalForm.linkedin} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                  <input type="text" name='linkedin' id='linkedin' placeholder='eg- https://linkedin/xyz' value={personalForm.linkedin || ""} onChange={personalChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
               </div>
-              <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={personalSave}>Save</button>
-            </div>
+              <button type='submit' className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500'>Save</button>
+            </form>
           </div>
+
 
           {/* expertise input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={expertiseInput} >
-            <div className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
+            <form onSubmit={expertiseSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
               <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { expertiseInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="main" className='px-4'>Enter expertise</label>
                   <input type="text" name='main' id='main' placeholder='eg- Web Developer' value={expertiseForm.main}
-                    onChange={expertiseChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                    onChange={expertiseChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="sub" className='px-4'>Enter desc. about expertise</label>
                   <textarea type="text" name='sub' id='sub' placeholder='eg- I am a MERN stack developer' rows='3'
-                    value={expertiseForm.sub} onChange={expertiseChange} className='px-3 py-2 rounded-3xl outline-none bg-transparent border placeholder:text-white'></textarea>
+                    value={expertiseForm.sub} onChange={expertiseChange} required className='px-3 py-2 rounded-3xl outline-none bg-transparent border placeholder:text-white'></textarea>
                 </div>
               </div>
               <div className='flex flex-col  gap-5 w-full items-center'>
-                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={expertiseAddClicked}>Add More +</button>
-                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={expertiseSave}>Save</button>
+                <button type='submit' className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={expertiseAddClicked}>Add More +</button>
+                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' >Save</button>
               </div>
-            </div>
+            </form>
           </div>
 
           {/* skill input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={skillInput} >
-            <div className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
+            <form onSubmit={skillSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
               <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { skillInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="slang" className='px-4'>Enter Skills</label>
                   <input type="text" name='slang' id='slang' placeholder='eg- Java , Python etc' value={skillForm.slang}
-                    onChange={skillChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                    onChange={skillChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="spercentage" className='px-4'>Enter Percentage out of 100</label>
                   <input type="text" name='spercentage' id='spercentage' placeholder='eg- 70, 80 etc '
-                    value={skillForm.spercentage} onChange={skillChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                    value={skillForm.spercentage} onChange={skillChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
               </div>
-              <div className='flex flex-col  gap-5 w-full items-center'>
-                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={skillAddClicked}>Add More +</button>
-                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={skillSave}>Save</button>
+              <div  className='flex flex-col  gap-5 w-full items-center'>
+                <button type='submit' className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={skillAddClicked}>Add More +</button>
+                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' >Save</button>
               </div>
-            </div>
+            </form>
           </div>
 
           {/* Language input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={languageInput} >
-            <div className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
+            <form onSubmit={languageSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
               <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { languageInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="llang" className='px-4'>Enter Language</label>
                   <input type="text" name='llang' id='llang' placeholder='eg- English , Hindi etc' value={languageForm.llang}
-                    onChange={languageChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                    onChange={languageChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="lpercentage" className='px-4'>Enter Percentage out of 100</label>
                   <input type="text" name='lpercentage' id='lpercentage' placeholder='eg- 70, 80 etc '
-                    value={languageForm.lpercentage} onChange={languageChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                    value={languageForm.lpercentage} onChange={languageChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
                 </div>
               </div>
               <div className='flex flex-col  gap-5 w-full items-center'>
-                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={languageAddClicked}>Add More +</button>
-                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={languageSave}>Save</button>
+                <button type='submit' className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={languageAddClicked}>Add More +</button>
+                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500'>Save</button>
               </div>
-            </div>
+            </form>
+          </div>
+
+          
+          {/* project input */}
+          <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={projectInput} >
+            <form  onSubmit={projectSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex overflow-y-scroll scrollbar-rounded' >
+              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { projectInput.current.style.display = 'none' }} />
+              <div className='flex flex-col gap-7 w-full items-center'>
+                {message && <p className='text-red-600 font-semibold'>{message}</p>}
+
+                <div className='flex flex-col gap-2 w-[80%]'>
+                  <label htmlFor="pname" className='px-4'>Enter project name</label>
+                  <input type="text" name='pname' id='pname' placeholder='eg- CreateFolio' value={projectForm.pname}
+                    onChange={projectChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                </div>
+                <div className='flex flex-col gap-2 w-[80%]'>
+                  <label htmlFor="puse" className='px-4'>Enter project usage</label>
+                  <input type="text" name='puse' id='puse' placeholder='eg- React, Express , MongoDB' value={projectForm.puse}
+                    onChange={projectChange} required className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                </div>
+                <div className='flex flex-col gap-2 w-[80%]'>
+                  <label htmlFor="plink" className='px-4'>Enter project link</label>
+                  <input type="text" name='plink' id='plink' placeholder='eg- https://createfolio.vercel.app' value={projectForm.plink} required
+                    onChange={projectChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
+                </div>
+                <div className='flex flex-col gap-2 w-[80%]'>
+                  <label htmlFor="pimage" className='px-4'>Add your project image</label>
+                  <input type="file" accept="image/*" onChange={pimageChange} ref={pimageInput} name='pimage' id='pimage' required className={`border ${message && 'border-red-600'} px-4 py-2 cursor-pointer rounded-3xl overflow-hidden`} />
+                </div>
+              </div>
+              <div className='flex flex-col  gap-5 w-full items-center'>
+                <button  className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={projectAddClicked}>Add More +</button>
+                <button type='submit' className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' >Save</button>
+              </div>
+            </form>
           </div>
 
           {/* Images input */}
@@ -919,41 +1046,6 @@ function User() {
               <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={imageSave}>Save</button>
             </div>
           </div>
-
-          {/* project input */}
-          <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={projectInput} >
-            <div className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex overflow-y-scroll scrollbar-rounded' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { projectInput.current.style.display = 'none' }} />
-              <div className='flex flex-col gap-7 w-full items-center'>
-                {message && <p className='text-red-600 font-semibold'>{message}</p>}
-
-                <div className='flex flex-col gap-2 w-[80%]'>
-                  <label htmlFor="pname" className='px-4'>Enter project name</label>
-                  <input type="text" name='pname' id='pname' placeholder='eg- CreateFolio' value={projectForm.pname}
-                    onChange={projectChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
-                </div>
-                <div className='flex flex-col gap-2 w-[80%]'>
-                  <label htmlFor="puse" className='px-4'>Enter project usage</label>
-                  <input type="text" name='puse' id='puse' placeholder='eg- React, Express , MongoDB' value={projectForm.puse}
-                    onChange={projectChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
-                </div>
-                <div className='flex flex-col gap-2 w-[80%]'>
-                  <label htmlFor="plink" className='px-4'>Enter project link</label>
-                  <input type="text" name='plink' id='plink' placeholder='eg- https://createfolio.vercel.app' value={projectForm.plink}
-                    onChange={projectChange} className='px-3 py-1 rounded-3xl outline-none bg-transparent border placeholder:text-white' />
-                </div>
-                <div className='flex flex-col gap-2 w-[80%]'>
-                  <label htmlFor="pimage" className='px-4'>Add your project image</label>
-                  <input type="file" accept="image/*" onChange={pimageChange} ref={pimageInput} name='pimage' id='pimage' className={`border ${message && 'border-red-600'} px-4 py-2 cursor-pointer rounded-3xl overflow-hidden`} />
-                </div>
-              </div>
-              <div className='flex flex-col  gap-5 w-full items-center'>
-                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={projectAddClicked}>Add More +</button>
-                <button className='w-[40%] rounded-3xl border bg-white text-black hover:bg-black hover:text-white px-2 py-2 transition-colors duration-500' onClick={projectSave}>Save</button>
-              </div>
-            </div>
-          </div>
-
         </div>
       </div>
     </>

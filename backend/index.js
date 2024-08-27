@@ -54,7 +54,7 @@ app.use(passport.session());
 // Google Auth Routes
 app.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
-app.get('/auth/google/callback', passport.authenticate('google', { 
+app.get('/auth/google/callback', passport.authenticate('google', {
     successRedirect: `${process.env.FRONTEND_URL}/dashboard`,
     failureRedirect: `${process.env.FRONTEND_URL}/login`,
 }));
@@ -62,22 +62,22 @@ app.get('/auth/google/callback', passport.authenticate('google', {
 // github Auth Routes
 app.get('/auth/github', passport.authenticate('github', { scope: ['user:email'] }));
 
-app.get('/auth/github/callback', passport.authenticate('github', { 
+app.get('/auth/github/callback', passport.authenticate('github', {
     successRedirect: `${process.env.FRONTEND_URL}/dashboard`,
     failureRedirect: `${process.env.FRONTEND_URL}/login`,
 }));
 
 // facebook Auth Routes
-app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile']}));
+app.get('/auth/facebook', passport.authenticate('facebook', { scope: ['email', 'public_profile'] }));
 
-app.get('/auth/facebook/callback', passport.authenticate('facebook', { 
+app.get('/auth/facebook/callback', passport.authenticate('facebook', {
     successRedirect: `${process.env.FRONTEND_URL}/dashboard`,
     failureRedirect: `${process.env.FRONTEND_URL}/login`,
 }));
 
 
 // Test route to see the user information
-app.get('/isLogin', async(req, res) => {
+app.get('/isLogin', async (req, res) => {
     if (req.isAuthenticated()) {
         res.json(req.user);
     } else {
@@ -96,56 +96,75 @@ app.get('/logout', (req, res) => {
 });
 
 // delete account
-app.get('/delete',async(req,res)=>{
+app.get('/delete', async (req, res) => {
     if (req.isAuthenticated()) {
-        await User.findOneAndDelete({username:req.user.username})
+        await User.findOneAndDelete({ username: req.user.username })
         res.redirect('/logout')
     }
 })
 
 
 // fetch portfolio
-app.post('/userPortfolio',async(req,res)=>{
-    try{
-        let portfolioData = await Portfolio.findOne({username:req.body.username})
-        if(portfolioData){
+app.post('/userPortfolio', async (req, res) => {
+    try {
+        let portfolioData = await Portfolio.findOne({ username: req.body.username })
+        if (portfolioData) {
             res.send(portfolioData)
-        }else{
+        } else {
             res.send({})
         }
-    }catch(err){
-        console.log('error in fetch portfoli',err)
+    } catch (err) {
+        console.log('error in fetch portfoli', err)
     }
 })
 
 // update portfolio
 app.post('/updatePortfolio', async (req, res) => {
-    try {
-        const { username, updates } = req.body; // Extracting updates from the request body
+    const { username, updates } = req.body; // Extracting updates from the request body
+    if (updates.project || updates.expertise || updates.skill || updates.language) {
+        const updatedPortfolio = await Portfolio.findOneAndUpdate(
+            { username: username }, // Find the document by username
+            { $addToSet: updates }, // Merge new data with existing data
+            { new: true, runValidators: true, upsert: true } // Options: return updated document, run schema validators, create if not found
+        );
+    } else {
         const updatedPortfolio = await Portfolio.findOneAndUpdate(
             { username: username }, // Find the document by username
             { $set: updates }, // Merge new data with existing data
             { new: true, runValidators: true, upsert: true } // Options: return updated document, run schema validators, create if not found
         );
-        // Send the updated portfolio as a response
-        res.json({
-            success: true,
-            message: 'Portfolio updated successfully !',
-            data: updatedPortfolio
-        });
-    } catch (err) {
-        console.log('Error in update portfolio', err);
-        res.json({
-            success: false,
-            message: 'Failed to update portfolio !',
-            error: err.message
-        });
     }
+    // Send the updated portfolio as a response
+    res.json({
+        success: true,
+        message: 'Portfolio updated successfully !',
+    });
+
 });
 
 
-app.get('/',(req,res)=>{
-    res.json({backend:'Done'})
+// delete item 
+app.post("/deleteItem",async(req,res)=>{
+    try {
+        const id = req.body.id
+        const username = req.body.username
+        const field = req.body.field
+
+        const portfolioItem = await Portfolio.findOneAndUpdate(
+            { username: username },
+            { $pull: { [field]: { _id: id } } },
+            { new: true }
+        )
+        res.json({msg:"Item deleted successfully"});
+
+    } catch (error) {
+        console.error("Error in delete item:", error);
+        res.status(500).send("Internal Server Error");
+    }
+})
+
+app.get('/', (req, res) => {
+    res.json({ backend: 'Done' })
 })
 
 app.listen(port, () => {
