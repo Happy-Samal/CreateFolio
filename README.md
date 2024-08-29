@@ -153,4 +153,5 @@ go to the [link](https://vercel.app) . create account with github and create a p
 ## Credit
 
 <a href="https://lordicon.com/">Icons by Lordicon.com</a>
+</br>
 <a href="https://icons8.com/">Icons by icons8.com</a>
