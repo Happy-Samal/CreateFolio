@@ -5,7 +5,6 @@ import { Helmet } from 'react-helmet-async';
 import emailjs from '@emailjs/browser';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { Bounce } from "react-toastify";
 
 function User() {
   const { username } = useParams();
@@ -25,7 +24,6 @@ function User() {
         }
       } catch (err) {
         console.log('Error in fetch user data', err)
-        navigate('/error')
       }
     }
     isuserLogin()
@@ -58,7 +56,7 @@ function User() {
         setUpdateTrigger(false)
       } catch (err) {
         console.log('Error in fetch user data', err)
-        navigate('/error')
+        
       }finally {
         setIsLoading(false); // Set loading state to false
       }
@@ -133,24 +131,12 @@ function User() {
         body: JSON.stringify(data),
       });
       const result = await response.json();
-      toast(result.message, {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast(result.message);
       setTimeout(() => {
         setUpdateTrigger(true);
       }, 1100);
     } catch (err) {
-      console.log('Error in fetch user data', err);
       toast.error('Error updating user info. Please try again.');
-      navigate('/error');
     }
   }
 
@@ -166,17 +152,7 @@ function User() {
         body: JSON.stringify(item),
       });
       const result = await response.json()
-      toast(result.msg, {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast(result.msg);
       setTimeout(() => {
         setUpdateTrigger(true);
       }, 1200);
@@ -225,17 +201,7 @@ function User() {
     setexpertiseForm({ ...expertiseForm, [e.target.name]: e.target.value })
   }
   const expertiseAddClicked = () => {
-    toast('expertise added !', {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+    toast('expertise added !');
     setexpertiseArr([...expertiseArr, expertiseForm]);
     setexpertiseForm({ main: '', sub: '' });
     
@@ -256,17 +222,7 @@ function User() {
     setskillForm({ ...skillForm, [e.target.name]: e.target.value })
   }
   const skillAddClicked = () => {
-    toast('skill added !', {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+    toast('skill added !');
     setskillArr([...skillArr, skillForm]);
     setskillForm({ slang: '', spercentage: '' });
   }
@@ -287,17 +243,7 @@ function User() {
     setlanguageForm({ ...languageForm, [e.target.name]: e.target.value })
   }
   const languageAddClicked = () => {
-    toast('language added !', {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+    toast('language added !');
     setlanguageArr([...languageArr, languageForm]);
     setlanguageForm({ llang: '', lpercentage: '' });
   }
@@ -363,17 +309,7 @@ function User() {
   }
 
   const projectAddClicked = () => {
-    toast('project added !', {
-      position: "top-right",
-      autoClose: 1000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-      progress: undefined,
-      theme: "light",
-      transition: Bounce,
-    });
+    toast('project added !');
     setprojectArr([...projectArr, projectForm])
     setProjectForm({ pname: '', puse: '', plink: '', pimage: '' })
 
@@ -415,17 +351,7 @@ function User() {
     try {
       const response = await emailjs.send(import.meta.env.VITE_SERVICE_KEY, import.meta.env.VITE_TEMPLATE_KEY, templateParams);
       console.log('SUCCESS!', response.status, response.text);
-      toast('Email sent successfully!', {
-        position: "top-right",
-        autoClose: 1000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-        transition: Bounce,
-      });
+      toast('Email sent successfully!');
     } catch (error) {
       console.error('FAILED...', error);
       toast.error('Failed to send email. Please try again.');
@@ -448,7 +374,7 @@ function User() {
     <>
     <ToastContainer
         position="top-right"
-        autoClose={5000}
+        autoClose={1000}
         hideProgressBar={false}
         newestOnTop={false}
         closeOnClick
