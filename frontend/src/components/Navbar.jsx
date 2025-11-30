@@ -75,10 +75,10 @@ function Navbar() {
             <div className='relative '>
             <button onClick={() => setDropdownHidden(!dropdownHidden)} onBlur={() => setTimeout(() => setDropdownHidden(true), 300)} className={`min-w-[116px] sm:min-w-[130px] hover:text-black rounded-[50px] border sm:px-5 sm:py-2.5 px-3.5 py-1.5 sm:text-base text-[12px] flex items-center justify-between gap-2 relative" type="button  ${scrollPosition > 60 ? 'border-black text-black  hover:bg-black hover:text-white' : 'border-white text-white hover:bg-white hover:text-black'} transition-colors duration-700 ease-in-out`}>
                 <div className='sm:w-7 sm:h-7 w-4 h-4 overflow-hidden border rounded-full bg-black border-white'>
-                    <img src={userdata.avatar ? userdata.avatar : '/avatar2.gif'} alt="user" className='sm:w-7 sm:h-7 w-4 h-4'  />
+                    <img loading="lazy"  src={userdata.avatar ? userdata.avatar : '/avatar2.gif'} alt="user" className='sm:w-7 sm:h-7 w-4 h-4'  />
                 </div>
                 <span className='sm:max-w-[140px] max-w-[120px] text-ellipsis whitespace-nowrap overflow-hidden'>{userdata.username}</span>
-                <span><img src="/downarrow.png" alt="arrow" className='w-[10px] h-[10px]' /></span>
+                <span><img loading="lazy"  src="/downarrow.png" alt="arrow" className='w-[10px] h-[10px]' /></span>
             </button>
 
             <ul id="dropdown" className={`${dropdownHidden ? 'hidden' : ''} z-50 w-full absolute text-sm  text-center `}>

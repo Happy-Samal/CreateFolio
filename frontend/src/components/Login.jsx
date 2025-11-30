@@ -23,7 +23,7 @@ function Login() {
             <div className=" relative sm:top-28 top-24 text-center border-2 rounded-xl h-[80vh] py-12 sm:px-8">
 
                 <div className='absolute top-3 right-3 cursor-pointer'>
-                    <NavLink to={'/'}><img src="/cross.png" alt="cross" className='w-8 h-8' /></NavLink>
+                    <NavLink to={'/'}><img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8' /></NavLink>
                 </div>
 
                 <span className="sm:text-[27px] text-[16px] font-bold  p-3">Login or Signup</span>

@@ -393,7 +393,7 @@ function User() {
 
       {/* bg image */}
       <div className='w-screen cmd:min-h-[83vh] min-h-[65vh] fixed bg-black'>
-        <img src={userPortfolio?.images?.cover || "/john1.jpg"} alt="bg" className=' absolute inset-0 object-cover w-full h-full opacity-60' />
+        <img loading="lazy"  src={userPortfolio?.images?.cover || "/john1.jpg"} alt="bg" className=' absolute inset-0 object-cover w-full h-full opacity-60' />
       </div>
 
       {/* Absolute div */}
@@ -401,17 +401,17 @@ function User() {
 
         {/* heading name on over the image */}
         {/* edit img */}
-        {isLogin && <img src="/addimg.png" alt="addimg" className='h-8 w-8 sm:h-[60px] sm:w-[60px] filter invert absolute sm:right-[20vw] right-20 sm:top-30 top-80 cursor-pointer' onClick={() => { imageInput.current.style.display = 'flex' }} />}
+        {isLogin && <img loading="lazy"  src="/addimg.png" alt="addimg" className='h-8 w-8 sm:h-[60px] sm:w-[60px] filter invert absolute sm:right-[20vw] right-20 sm:top-30 top-80 cursor-pointer' onClick={() => { imageInput.current.style.display = 'flex' }} />}
         <div className='pt-4 flex flex-col cmd:gap-40 gap-32 cmd:pl-[40px] cmd:min-h-[83vh] min-h-[65vh]' ref={homeRef}>
           <ul className='flex cmd:gap-4 gap-2 justify-center items-center cmd:justify-start'>
-            <li><a href={userPortfolio?.personalInfo?.github || '#'}><img src="/demogit.gif" alt="github" className='w-6 h-6 ' /></a></li>
-            <li><a href={userPortfolio?.personalInfo?.facebook || '#'}><img src="/demofab.gif" alt="facebook" className='w-6 h-6 ' /></a></li>
-            <li><a href={userPortfolio?.personalInfo?.instagram || '#'}><img src="/demoinsta.gif" alt="insta" className='w-6 h-6 ' /></a></li>
-            <li><a href={userPortfolio?.personalInfo?.linkedin || '#'}><img src="/demolink.gif" alt="linkedin" className='w-6 h-6 ' /></a></li>
+            <li><a href={userPortfolio?.personalInfo?.github || '#'}><img loading="lazy"  src="/demogit.gif" alt="github" className='w-6 h-6 ' /></a></li>
+            <li><a href={userPortfolio?.personalInfo?.facebook || '#'}><img loading="lazy"  src="/demofab.gif" alt="facebook" className='w-6 h-6 ' /></a></li>
+            <li><a href={userPortfolio?.personalInfo?.instagram || '#'}><img loading="lazy"  src="/demoinsta.gif" alt="insta" className='w-6 h-6 ' /></a></li>
+            <li><a href={userPortfolio?.personalInfo?.linkedin || '#'}><img loading="lazy"  src="/demolink.gif" alt="linkedin" className='w-6 h-6 ' /></a></li>
           </ul>
           <div className='flex flex-col text-[#dedddd] cmd:pl-0 pl-[15px]'>
             {/* edit */}
-            {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 filter invert cursor-pointer' onClick={() => { userInfoInput.current.style.display = 'flex' }} />}
+            {isLogin && <img loading="lazy"  src="/edit.gif" alt="edit" className='w-5 h-5 filter invert cursor-pointer' onClick={() => { userInfoInput.current.style.display = 'flex' }} />}
 
             <h4 className='cmd:text-[24px] text-[18px] font-[500] '>{userPortfolio?.userInfo?.greet || 'Hello, I am'}</h4>
             <h1 className='cmd:text-[60px] text-[30px] font-[600] pl-[10px]'>{userPortfolio?.userInfo?.name || 'John Doe'}</h1>
@@ -435,7 +435,7 @@ function User() {
                 <button onClick={(e) => { navBtnClick(e) }} name='resume' className={btnColor('resume')}>Resume</button>
               </div>
             </div>
-            <button className={` border px-1  bg-white shadow-[2px_4px_4px_rgba(0,0,0,0.4)] rounded-md cmd:hidden ${expanded ? 'border-[#f76276] border-2' : 'border-transparent border-2 transition-all duration-500 ease-in-out'}`} onClick={() => { setExapnded(!expanded) }}> <img src="/expandbar.svg" alt="expandbar" className='w-8' /></button>
+            <button className={` border px-1  bg-white shadow-[2px_4px_4px_rgba(0,0,0,0.4)] rounded-md cmd:hidden ${expanded ? 'border-[#f76276] border-2' : 'border-transparent border-2 transition-all duration-500 ease-in-out'}`} onClick={() => { setExapnded(!expanded) }}> <img loading="lazy"  src="/expandbar.svg" alt="expandbar" className='w-8' /></button>
 
             {/* Desktop navbar*/}
             <div className='gap-8 text-lg font-semibold hidden cmd:flex'>
@@ -444,7 +444,7 @@ function User() {
               <button onClick={(e) => { navBtnClick(e) }} name='project' className={btnColor('project')}>Projects</button>
             </div>
             <div className={`cmd:flex w-[170px] h-[170px] rounded-full  justify-center items-center overflow-hidden border-[10px] border-white   absolute  left-[44%]  ${istop ? 'cstminvisible' : 'cstmvisible'} shadow-[2px_4px_4px_rgba(0,0,0,0.7)]  hidden`} ref={dpRef}>
-              <img src={userPortfolio?.images?.profile || "/avatar.jpg"} alt="dp" className='w-[170px] h-[170px] inset-0 object-cover ' />
+              <img loading="lazy"  src={userPortfolio?.images?.profile || "/avatar.jpg"} alt="dp" className='w-[170px] h-[170px] inset-0 object-cover ' />
             </div>
             <div className={`cmd:flex flex-col min-w-[180px] h-full items-center top-[40px]  ${istop ? 'cvisible' : 'invisible'} absolute left-[44%]  gap-[2px] hidden`}>
               <span className='text-xl font-[400]'>{userPortfolio?.userInfo?.name || 'John Doe'}</span>
@@ -463,7 +463,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h3 className='text-[28px] font-[400]'>Who I am</h3>
                 {/* edit */}
-                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { whoiamInput.current.style.display = 'flex' }} />}
+                {isLogin && <img loading="lazy"  src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { whoiamInput.current.style.display = 'flex' }} />}
 
               </div>
               <div className='flex flex-col gap-4'>
@@ -478,7 +478,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h3 className='text-[28px] font-[400]'>Personal Info</h3>
                 {/* edit */}
-                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { personalInput.current.style.display = 'flex' }} />}
+                {isLogin && <img loading="lazy"  src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { personalInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-2'>
                 <span><span className='font-[500]'>Birthdate</span> : {userPortfolio?.personalInfo?.birth || '19/04/1980'}</span>
@@ -487,24 +487,24 @@ function User() {
                 <span><span className='font-[500]'>Address</span>: {userPortfolio?.personalInfo?.address || '003 Creator Lane, Innovation City, CA 3377'}</span>
               </div>
               <ul className='flex gap-4'>
-                <li><a href={userPortfolio?.personalInfo?.github || '#'}><img src="/demogit.gif" alt="github" className='w-6 h-6 filter invert' /></a></li>
-                <li><a href={userPortfolio?.personalInfo?.facebook || '#'}><img src="/demofab.gif" alt="facebook" className='w-6 h-6 filter invert' /></a></li>
-                <li><a href={userPortfolio?.personalInfo?.instagram || '#'}><img src="/demoinsta.gif" alt="insta" className='w-6 h-6 filter invert' /></a></li>
-                <li><a href={userPortfolio?.personalInfo?.linkedin || '#'}><img src="/demolink.gif" alt="linkedin" className='w-6 h-6 filter invert' /></a></li>
+                <li><a href={userPortfolio?.personalInfo?.github || '#'}><img loading="lazy"  src="/demogit.gif" alt="github" className='w-6 h-6 filter invert' /></a></li>
+                <li><a href={userPortfolio?.personalInfo?.facebook || '#'}><img loading="lazy"  src="/demofab.gif" alt="facebook" className='w-6 h-6 filter invert' /></a></li>
+                <li><a href={userPortfolio?.personalInfo?.instagram || '#'}><img loading="lazy"  src="/demoinsta.gif" alt="insta" className='w-6 h-6 filter invert' /></a></li>
+                <li><a href={userPortfolio?.personalInfo?.linkedin || '#'}><img loading="lazy"  src="/demolink.gif" alt="linkedin" className='w-6 h-6 filter invert' /></a></li>
               </ul>
             </div>
             <div className='flex cmd:gap-10 gap-5 flex-col border border-r-[#b1b1b1] cmd:w-1/3 w-full px-12 cmd:py-20 py-8'>
               <div className='flex gap-3 items-center'>
                 <h3 className='text-[28px] font-[400]'>My Expertise</h3>
                 {/* edit */}
-                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { expertiseInput.current.style.display = 'flex' }} />}
+                {isLogin && <img loading="lazy"  src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { expertiseInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-4'>
                 {userPortfolio?.expertise ? userPortfolio?.expertise?.map((item) => {
                   return <div key={item._id}>
                     <div className='flex gap-1 items-center'>
                     <span className='text-[20px] font-[400]'>{item.main}</span>
-                    {isLogin && <img src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"expertise", id:item._id})}}/>}
+                    {isLogin && <img loading="lazy"  src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"expertise", id:item._id})}}/>}
                     </div>
                     <p className='text-[14px]'>{item.sub}</p>
                     
@@ -531,15 +531,15 @@ function User() {
             <div className='flex gap-3 items-center'>
               <h2 className='cmd:text-[34px] text-[28px] font-[400] '>My projects</h2>
               {/* edit */}
-              {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { projectInput.current.style.display = 'flex' }} />}
+              {isLogin && <img loading="lazy"  src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { projectInput.current.style.display = 'flex' }} />}
             </div>
             <div className='flex flex-wrap justify-center gap-10'>
 
               {userPortfolio?.project ? userPortfolio?.project?.map((item) => {
                 return <div key={item._id} className=' w-[280px] cmd:w-[370px] h-[320px] border shadow-[2px_4px_4px_rgba(0,0,0,0.5)] rounded-xl overflow-hidden relative hover:cursor-pointer' onMouseOver={() => { setHoveredId(item._id) }} onMouseLeave={() => setHoveredId(null)}>
-                  {isLogin && <img src="/delete.gif" alt="delete" className='w-6 h-6 cursor-pointer absolute bottom-1 right-1' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"project", id:item._id})}}/>}
+                  {isLogin && <img loading="lazy"  src="/delete.gif" alt="delete" className='w-6 h-6 cursor-pointer absolute bottom-1 right-1' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"project", id:item._id})}}/>}
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId === item._id ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href={item.plink}>View on Site &rarr;</a></div>
-                  <img src={item.pimage} alt={item.pname} className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img loading="lazy"  src={item.pimage} alt={item.pname} className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
                     <p><span className='font-[500]'>Name :</span> {item.pname} </p>
                     <p><span className='font-[500]'>Use</span> : {item.puse}</p>
@@ -550,7 +550,7 @@ function User() {
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '1' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://create-folio.vercel.app/">View on Site &rarr;</a></div>
 
-                  <img src="/createfolio.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img loading="lazy"  src="/createfolio.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
                     <p><span className='font-[500]'>Name :  </span>Create Folio - Create your portfolio in sec</p>
                     <p><span className='font-[500]'>Use</span> : ReactJs , ExpressJs, Mongoose , Tailwind CSS , PassportJs , EmailJs , Leaflet</p>
@@ -560,7 +560,7 @@ function User() {
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '2' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://need-money.vercel.app/">View on Site &rarr;</a></div>
 
-                  <img src="/needmoney.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img loading="lazy"  src="/needmoney.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
                     <p><span className='font-[500]'>Name :  </span>Need Money - Used for help your friend and favorite cretor</p>
                     <p><span className='font-[500]'>Use</span> : NextJS , Mongoose , Tailwind CSS , Next-auth js , RazorPay</p>
@@ -570,7 +570,7 @@ function User() {
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '3' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://password-manager-localstorage.vercel.app/">View on Site &rarr;</a></div>
 
-                  <img src="/passwordmanager.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img loading="lazy"  src="/passwordmanager.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
                     <p><span className='font-[500]'>Name :  </span>Password Manager - Used for Save your Password.</p>
                     <p><span className='font-[500]'>Use</span> : React JS , Express JS ,  Mongoose , Tailwind CSS </p>
@@ -580,7 +580,7 @@ function User() {
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '4' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://happysamal.freewebhostmost.com/">View on Site &rarr;</a></div>
 
-                  <img src="/musicplayer.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img loading="lazy"  src="/musicplayer.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
                     <p><span className='font-[500]'>Name :  </span>Playio Music Player - Used for listen songs.</p>
                     <p><span className='font-[500]'>Use</span> : HTML , CSS , Javascript</p>
@@ -590,7 +590,7 @@ function User() {
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '5' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://rock-paper-scissors-happy-samal.vercel.app/">View on Site &rarr;</a></div>
 
-                  <img src="/rockpaper.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img loading="lazy"  src="/rockpaper.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
                     <p><span className='font-[500]'>Name :  </span>Rock Paper Scrisors - Used for play game.</p>
                     <p><span className='font-[500]'>Use</span> : HTML , CSS , Javascript</p>
@@ -600,7 +600,7 @@ function User() {
 
                   <div className={`absolute left-[22%]  cmd:left-[28%] px-6 py-1.5  bg-[#090909] border-2 border-white text-gray-500 hover:text-white rounded-3xl ${hoveredId == '6' ? 'sitevisible' : 'sitehidden'}`} ref={siteRef}> <a href="https://tic-tac-toe-happy-samal.vercel.app/">View on Site &rarr;</a></div>
 
-                  <img src="/tictac.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
+                  <img loading="lazy"  src="/tictac.png" alt="need" className='w-[280px] cmd:w-[370px] h-[210px]' />
                   <div className='bg-[#ffffff] px-2 text-[14px] py-2'>
                     <p><span className='font-[500]'>Name :  </span>Tic Tac Toe - Used for play game.</p>
                     <p><span className='font-[500]'>Use</span> : HTML , CSS , Javascript</p>
@@ -616,7 +616,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h2 className='cmd:text-[34px] text-[28px] font-[400] '>Skills</h2>
                 {/* edit */}
-                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { skillInput.current.style.display = 'flex' }} />}
+                {isLogin && <img loading="lazy"  src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { skillInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-4 py-10 border shadow-[2px_4px_4px_rgba(0,0,0,0.4)]  px-10  cmd:w-[420px] w-[280px]'>
 
@@ -624,7 +624,7 @@ function User() {
                   return <div key={item._id} className='flex flex-col gap-2'>
                     <div className='flex items-center gap-1'>
                     <span className='font-semibold'>{item.slang}</span>
-                    {isLogin && <img src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"skill", id:item._id})}}/>}
+                    {isLogin && <img loading="lazy"  src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"skill", id:item._id})}}/>}
                     </div>
                     <div className=' h-[5px] bg-[#d2d2d2] rounded-md relative'>
                       <span className='bg-[#f85c70] h-full absolute' style={{ width: `${Number(item.spercentage)}%` }} ></span>
@@ -675,7 +675,7 @@ function User() {
               <div className='flex gap-3 items-center'>
                 <h2 className='cmd:text-[34px] text-[28px] font-[400] '>Language</h2>
                 {/* edit */}
-                {isLogin && <img src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { languageInput.current.style.display = 'flex' }} />}
+                {isLogin && <img loading="lazy"  src="/edit.gif" alt="edit" className='w-5 h-5 cursor-pointer' onClick={() => { languageInput.current.style.display = 'flex' }} />}
               </div>
               <div className='flex flex-col gap-4 py-10 border shadow-[2px_4px_4px_rgba(0,0,0,0.4)]  px-10 cmd:w-[420px] w-[280px]'>
 
@@ -683,7 +683,7 @@ function User() {
                   return <div key={item._id} className='flex flex-col gap-2'>
                     <div className='flex items-center gap-1'>
                     <span className='font-semibold'>{item.llang}</span>
-                    {isLogin && <img src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"language", id:item._id})}}/>}
+                    {isLogin && <img loading="lazy"  src="/delete.gif" alt="delete" className='w-5 h-5 cursor-pointer' onClick={()=>{deleteClick({username:userPortfolio?.username , field:"language", id:item._id})}}/>}
                     </div>
                     <div className=' h-[5px] bg-[#d2d2d2] rounded-md relative'>
                       <span className='bg-[#f85c70] h-full absolute' style={{ width: `${Number(item.lpercentage)}%` }} ></span>
@@ -734,21 +734,21 @@ function User() {
                 <span className='cmd:text-[34px] text-[28px]  font-[400] '>Get in touch</span>
                 <div className='flex flex-col gap-5'>
                   <div className='flex gap-2'>
-                    <img src="/phone.gif" alt="phone" className='w-6 h-6' />
+                    <img loading="lazy"  src="/phone.gif" alt="phone" className='w-6 h-6' />
                     <span className='flex flex-col'>
                       <span className='font-[500]'>Phone :</span>
                       <span>{userPortfolio?.personalInfo?.phone || '+ (123) 456-7890'}</span>
                     </span>
                   </div>
                   <div className='flex gap-2'>
-                    <img src="/location.gif" alt="location" className='w-6 h-6' />
+                    <img loading="lazy"  src="/location.gif" alt="location" className='w-6 h-6' />
                     <span className='flex flex-col'>
                       <span className='font-[500]'>Address :</span>
                       <span className='cmd:max-w-[280px] max-w-[200px] text-ellipsis overflow-hidden'>{userPortfolio?.personalInfo?.address || '003 Creator Lane, Innovation City, CA 3377'}</span>
                     </span>
                   </div>
                   <div className='flex gap-2'>
-                    <img src="/email.gif" alt="email" className='w-6 h-6' />
+                    <img loading="lazy"  src="/email.gif" alt="email" className='w-6 h-6' />
                     <span className='flex flex-col'>
                       <span className='font-[500]'>Email :</span>
                       <span>{userPortfolio?.personalInfo?.email || 'createfolio@gmail.com'}</span>
@@ -756,10 +756,10 @@ function User() {
                   </div>
                 </div>
                 <ul className='flex gap-4'>
-                  <li><a href={userPortfolio?.personalInfo?.github || '#'}><img src="/demogit.gif" alt="github" className='w-6 h-6 filter invert' /></a></li>
-                  <li><a href={userPortfolio?.personalInfo?.facebook || '#'}><img src="/demofab.gif" alt="facebook" className='w-6 h-6 filter invert' /></a></li>
-                  <li><a href={userPortfolio?.personalInfo?.instagram || '#'}><img src="/demoinsta.gif" alt="insta" className='w-6 h-6 filter invert' /></a></li>
-                  <li><a href={userPortfolio?.personalInfo?.linkedin || '#'}><img src="/demolink.gif" alt="linkedin" className='w-6 h-6 filter invert' /></a></li>
+                  <li><a href={userPortfolio?.personalInfo?.github || '#'}><img loading="lazy"  src="/demogit.gif" alt="github" className='w-6 h-6 filter invert' /></a></li>
+                  <li><a href={userPortfolio?.personalInfo?.facebook || '#'}><img loading="lazy"  src="/demofab.gif" alt="facebook" className='w-6 h-6 filter invert' /></a></li>
+                  <li><a href={userPortfolio?.personalInfo?.instagram || '#'}><img loading="lazy"  src="/demoinsta.gif" alt="insta" className='w-6 h-6 filter invert' /></a></li>
+                  <li><a href={userPortfolio?.personalInfo?.linkedin || '#'}><img loading="lazy"  src="/demolink.gif" alt="linkedin" className='w-6 h-6 filter invert' /></a></li>
                 </ul>
               </div>
 
@@ -780,7 +780,7 @@ function User() {
           {/* userInfo input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={userInfoInput} >
             <form onSubmit={userInfoSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { userInfoInput.current.style.display = 'none' }} />
+              <img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { userInfoInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="greet" className='px-4'>Enter Greet</label>
@@ -804,7 +804,7 @@ function User() {
           {/* whoiam input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={whoiamInput} >
             <form onSubmit={whoiamSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { whoiamInput.current.style.display = 'none' }} />
+              <img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { whoiamInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="about" className='px-4'>Enter about</label>
@@ -823,7 +823,7 @@ function User() {
           {/* personalInfo input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={personalInput} >
             <form  onSubmit={personalSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex overflow-y-scroll scrollbar-rounded' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { personalInput.current.style.display = 'none' }} />
+              <img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { personalInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="birth" className='px-4'>Enter your birth date</label>
@@ -868,7 +868,7 @@ function User() {
           {/* expertise input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={expertiseInput} >
             <form onSubmit={expertiseSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { expertiseInput.current.style.display = 'none' }} />
+              <img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { expertiseInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="main" className='px-4'>Enter expertise</label>
@@ -891,7 +891,7 @@ function User() {
           {/* skill input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={skillInput} >
             <form onSubmit={skillSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { skillInput.current.style.display = 'none' }} />
+              <img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { skillInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="slang" className='px-4'>Enter Skills</label>
@@ -914,7 +914,7 @@ function User() {
           {/* Language input*/}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={languageInput} >
             <form onSubmit={languageSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { languageInput.current.style.display = 'none' }} />
+              <img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { languageInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 <div className='flex flex-col gap-2 w-[80%]'>
                   <label htmlFor="llang" className='px-4'>Enter Language</label>
@@ -938,7 +938,7 @@ function User() {
           {/* project input */}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={projectInput} >
             <form  onSubmit={projectSave} className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex overflow-y-scroll scrollbar-rounded' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { projectInput.current.style.display = 'none' }} />
+              <img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { projectInput.current.style.display = 'none' }} />
               <div className='flex flex-col gap-7 w-full items-center'>
                 {message && <p className='text-red-600 font-semibold'>{message}</p>}
 
@@ -972,7 +972,7 @@ function User() {
           {/* Images input */}
           <div className='fixed top-20 cmd:top-40 w-full min-h-[80vh] cmd:min-h-[70vh] z-50  justify-center hidden' ref={imageInput} >
             <div className='text-white backdrop-blur-[3px] bg-black bg-opacity-60  w-[98%] cmd:w-[50vw] h-full absolute border shadow-[2px_4px_4px_rgba(0,0,0,0.8)]  flex-col items-center py-16 gap-12 flex ' >
-              <img src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { imageInput.current.style.display = 'none' }} />
+              <img loading="lazy"  src="/cross.png" alt="cross" className='w-8 h-8 absolute top-4 right-4 cursor-pointer' onClick={() => { imageInput.current.style.display = 'none' }} />
 
               <div className='flex flex-col gap-5 w-[80%]'>
                 {message && <p className='text-red-600 font-semibold'>{message}</p>}

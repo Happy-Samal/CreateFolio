@@ -42,7 +42,7 @@ function Dashboard() {
           </div>
           <div className='flex flex-col text-center items-center'>
           <div className="w-24 h-24 sm:w-32 sm:h-32 object-cover rounded-full overflow-hidden bg-black border-white border-2">
-            <img src={userData.avatar ? userData.avatar : '/avatar1.gif'} alt="profile" className="w-24 h-24 sm:w-32 sm:h-32 rounded-full" />
+            <img loading="lazy"  src={userData.avatar ? userData.avatar : '/avatar1.gif'} alt="profile" className="w-24 h-24 sm:w-32 sm:h-32 rounded-full" />
           </div>
           <span>{userData.displayname}</span>
           </div>
